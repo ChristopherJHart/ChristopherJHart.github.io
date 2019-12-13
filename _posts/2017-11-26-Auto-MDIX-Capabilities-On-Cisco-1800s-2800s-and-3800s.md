@@ -5,21 +5,21 @@ title: Auto-MDIX Capabilities on Cisco 1800s, 2800s, and 3800s
 
 A common question I have seen asked is what models of Cisco 1800s, 2800s, and 3800s support auto-MDIX, a feature that allows for Ethernet cables with almost any pinout to connect devices together. This question has become prevalent now that these devices are becoming more affordable on the used Cisco market, making them especially prominent in home or business lab environments. I have personally tested all of the below devices to verify the presence or absence of auto-MDIX.
 
-| Model | Auto-MDIX |
+| Model     | Auto-MDIX |
 |-----------|-----------|
-| CISCO1801 | Yes |
-| CISCO1802 | Yes |
-| CISCO1803 | Yes |
-| CISCO1811 | Yes |
-| CISCO1812 | Yes |
-| CISCO1841 | No |
-| C1861 | Yes |
-| CISCO2801 | No |
-| CISCO2811 | Yes |
-| CISCO2821 | Yes* |
-| CISCO2851 | Yes* |
-| CISCO3825 | Yes* |
-| CISCO3845 | Yes* |
+| CISCO1801 | Yes       |
+| CISCO1802 | Yes       |
+| CISCO1803 | Yes       |
+| CISCO1811 | Yes       |
+| CISCO1812 | Yes       |
+| CISCO1841 | No        |
+| C1861     | Yes       |
+| CISCO2801 | No        |
+| CISCO2811 | Yes       |
+| CISCO2821 | Yes*      |
+| CISCO2851 | Yes*      |
+| CISCO3825 | Yes*      |
+| CISCO3845 | Yes*      |
 
 *These devices have Gigabit Ethernet interfaces, which support auto-MDIX by default according to IEEE 802.3-2012, section 40.8.2
 

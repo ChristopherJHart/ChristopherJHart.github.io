@@ -1,0 +1,12 @@
+--2019-12-12 19:38:32--  https://chrisjhart.com/wp-content/uploads/2017/11/XR-pie-tar.png
+Resolving chrisjhart.com (chrisjhart.com)... 138.197.68.248
+Connecting to chrisjhart.com (chrisjhart.com)|138.197.68.248|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 59574 (58K) [image/png]
+Saving to: ‘XR-pie-tar.png’
+
+     0K .......... .......... .......... .......... .......... 85% 1.68M 0s
+    50K ........                                              100%  168M=0.03s
+
+2019-12-12 19:38:32 (1.95 MB/s) - ‘XR-pie-tar.png’ saved [59574/59574]
+

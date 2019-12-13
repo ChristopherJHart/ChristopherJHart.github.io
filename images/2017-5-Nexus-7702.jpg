@@ -1,0 +1,11 @@
+--2019-12-12 18:47:02--  https://chrisjhart.com/wp-content/uploads/2017/05/nexus-rgb-600x400-300x200.jpg
+Resolving chrisjhart.com (chrisjhart.com)... 138.197.68.248
+Connecting to chrisjhart.com (chrisjhart.com)|138.197.68.248|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 10349 (10K) [image/jpeg]
+Saving to: ‘nexus-rgb-600x400-300x200.jpg’
+
+     0K ..........                                            100% 86.0M=0s
+
+2019-12-12 18:47:02 (86.0 MB/s) - ‘nexus-rgb-600x400-300x200.jpg’ saved [10349/10349]
+

@@ -1,0 +1,14 @@
+--2019-12-12 18:40:07--  https://chrisjhart.com/wp-content/uploads/2017/05/Lab-Topology-v2.jpg
+Resolving chrisjhart.com (chrisjhart.com)... 138.197.68.248
+Connecting to chrisjhart.com (chrisjhart.com)|138.197.68.248|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 195108 (191K) [image/jpeg]
+Saving to: ‘Lab-Topology-v2.jpg’
+
+     0K .......... .......... .......... .......... .......... 26% 1.65M 0s
+    50K .......... .......... .......... .......... .......... 52% 3.30M 0s
+   100K .......... .......... .......... .......... .......... 78% 3.22M 0s
+   150K .......... .......... .......... ..........           100% 87.6M=0.06s
+
+2019-12-12 18:40:08 (3.10 MB/s) - ‘Lab-Topology-v2.jpg’ saved [195108/195108]
+

@@ -1,0 +1,12 @@
+--2019-12-12 18:58:43--  https://chrisjhart.com/wp-content/uploads/2017/05/regedit_2017-05-25_18-05-47.png
+Resolving chrisjhart.com (chrisjhart.com)... 138.197.68.248
+Connecting to chrisjhart.com (chrisjhart.com)|138.197.68.248|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 58592 (57K) [image/png]
+Saving to: ‘regedit_2017-05-25_18-05-47.png’
+
+     0K .......... .......... .......... .......... .......... 87% 1.63M 0s
+    50K .......                                               100%  152M=0.03s
+
+2019-12-12 18:58:43 (1.86 MB/s) - ‘regedit_2017-05-25_18-05-47.png’ saved [58592/58592]
+

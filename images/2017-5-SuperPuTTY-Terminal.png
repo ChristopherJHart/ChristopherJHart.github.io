@@ -1,0 +1,11 @@
+--2019-12-12 18:58:34--  https://chrisjhart.com/wp-content/uploads/2017/05/SuperPutty_2017-05-25_18-00-51.png
+Resolving chrisjhart.com (chrisjhart.com)... 138.197.68.248
+Connecting to chrisjhart.com (chrisjhart.com)|138.197.68.248|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 30249 (30K) [image/png]
+Saving to: ‘SuperPutty_2017-05-25_18-00-51.png’
+
+     0K .......... .......... .........                       100% 1.99M=0.01s
+
+2019-12-12 18:58:34 (1.99 MB/s) - ‘SuperPutty_2017-05-25_18-00-51.png’ saved [30249/30249]
+

@@ -1,0 +1,13 @@
+--2019-12-12 18:27:28--  https://chrisjhart.com/wp-content/uploads/2017/05/Lab-Topology-Censored.jpg
+Resolving chrisjhart.com (chrisjhart.com)... 138.197.68.248
+Connecting to chrisjhart.com (chrisjhart.com)|138.197.68.248|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 110616 (108K) [image/jpeg]
+Saving to: ‘Lab-Topology-Censored.jpg’
+
+     0K .......... .......... .......... .......... .......... 46% 1.61M 0s
+    50K .......... .......... .......... .......... .......... 92% 3.33M 0s
+   100K ........                                              100% 55.6M=0.05s
+
+2019-12-12 18:27:28 (2.34 MB/s) - ‘Lab-Topology-Censored.jpg’ saved [110616/110616]
+

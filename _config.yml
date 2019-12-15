@@ -11,8 +11,7 @@ description: Documenting my discoveries in the IT world
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://avatars3.githubusercontent.com/u/13562529
 
-theme: slate
-
+theme: jekyll-theme-slate
 #
 # Flags below are optional
 #

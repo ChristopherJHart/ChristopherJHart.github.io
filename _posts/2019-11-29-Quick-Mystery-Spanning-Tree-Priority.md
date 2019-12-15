@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Quick Mystery: Spanning Tree Priority
+title: Quick Mystery - Spanning Tree Priority
 ---
 
 One aspect of Spanning Tree Protocol that I became curious about during my CCIE studies was the exact behavior behind how Spanning Tree bridge priorities are modified using the `spanning-tree vlan {vlan-id} root {primary | secondary}` configuration command. This post explores this behavior in the lab!

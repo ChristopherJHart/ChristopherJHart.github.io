@@ -1,6 +1,6 @@
 ---
 layout: post
-title: CCNP ROUTE Lab: EIGRP, DMVPN, PBR, and PAT
+title: CCNP ROUTE Lab - EIGRP, DMVPN, PBR, and PAT
 ---
 
 During my CCNP Route studies, I created a lab involving the configuration and manipulation of EIGRP, DMVPN, PBR, and PAT. The topology and instructions are as follows:

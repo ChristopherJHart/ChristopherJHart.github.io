@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Establishing A Baseline
+title: Bringing The Gap - Frame Relay
 ---
 
 When the ICND1, ICND2, and CCNA R&S composite exams were updated to their latest versions on August 20th, 2016, Frame Relay technology was removed from the exam topics. However, network engineers who obtained their CCNA R&S certification using these new exams and want to pursue their CCNP R&S certification will find that Frame Relay is still in the exam topics under the CCNP ROUTE exam, as well as lingering in the CCIE R&S exam as well! This can make learning an otherwise-legacy technology extremely difficult, especially as there are fewer and fewer real-world examples to draw from.

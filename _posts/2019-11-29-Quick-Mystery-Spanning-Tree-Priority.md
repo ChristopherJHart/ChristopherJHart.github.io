@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Establishing A Baseline
+title: Quick Mystery: Spanning Tree Priority
 ---
 
 ## Mystery

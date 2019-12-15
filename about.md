@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-<img style="float: left;" src="{{ site.baseurl }}/images/About-Picture.png">
+![]("{{ site.baseurl }}/images/About-Picture.png")
 
 My name is Christopher Hart, and I currently work as a TAC engineer on the Data Center Routing & Switching team at Cisco’s RTP campus. Before my current role at Cisco, I was an IT consultant serving small businesses in the Raleigh-Durham area. My passion for technology started as a small child, where my obsession with video games and computers evolved into an interest in all things IT.
 

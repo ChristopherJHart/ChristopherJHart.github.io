@@ -19,7 +19,7 @@ To answer these questions, I decided to test in the lab!
 
 ## Topology
 
-![]({{ site.baseurl }}/images/2019-12-STP-DD-TCN-Topology.jpg)
+![]({{ site.baseurl }}/images/2019-12-STP-DD-TCN-Topology.png)
 
 Bridge ID and IP address information is as follows:
 

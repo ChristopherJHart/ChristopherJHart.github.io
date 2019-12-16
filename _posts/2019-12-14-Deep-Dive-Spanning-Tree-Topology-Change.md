@@ -190,7 +190,7 @@ The four events are:
 
 2. S1-2 generates a Configuration BPDU on Gi0/2 (the interface that was *just* administratively shut down). At first, this might not make sense (after all, why would Spanning Tree attempt to send a Configuration BPDU out of an interface that is down?) However, since the Spanning Tree process on S1-2 has not yet sent a Topology Change Notification BPDU towards the root bridge, the Spanning Tree process is most likely not yet aware that the Gi0/2 interface is down at the moment. As a result, Spanning Tree would likely hand the Configuration BPDU generated in this debug to the data plane, which would subsequently drop it since it cannot forward a frame out of an interface that is down.
 
-3. About a second later, S1-2 generates a Topology Change Notification BPDU out of Gi0/1. This indicates that the Spanning Tree process is now aware that Gi0/1 is down, and that a topology change has occurred. Just like the debug on the fourth line of the first event, this debug logically separates each part of the BPDU to make it easier to read. In this debug, the third section is set to 0x80. This indicates that this is a Topology Change Notification BPDU. This stands in contrast to the 0x00 value seen in line four of the first event, which indicates the BPDU is a Configuration BPDU.
+3. About a second later, S1-2 generates a Topology Change Notification BPDU out of Gi0/1. This indicates that the Spanning Tree process is now aware that Gi0/1 is down, and that a topology change has occurred. Just like the debug on the fourth line of the first event, this debug logically separates each part of the BPDU to make it easier to read. In this debug, the third section is set to `0x80`. This indicates that this is a Topology Change Notification BPDU. This stands in contrast to the `0x00` value seen in line four of the first event, which indicates the BPDU is a Configuration BPDU.
 
 4. Finally, the Spanning Tree process reports that it has sent a Topology Change Notification (in this case, the debug calls it a "Notice") out of the root port, Gi0/1.
 
@@ -218,7 +218,7 @@ S1-1#show logging | begin Dec.14.14:38
 
 These debugs show three separate events that occurred on S1-1:
 
-1. S1-1 receives the Topology Change Notification BPDU from Gi0/2, as shown by line 1. You can tell that this is the Topology Change Notification BPDU sent by S1-2 because of the 0x80 value in the third field of the BPDU shown in line 4. S1-1 recognizes this as a Topology Change Notification BPDU and logs it as such in line 5.
+1. S1-1 receives the Topology Change Notification BPDU from Gi0/2, as shown by line 1. You can tell that this is the Topology Change Notification BPDU sent by S1-2 because of the `0x80` value in the third field of the BPDU shown in line 4. S1-1 recognizes this as a Topology Change Notification BPDU and logs it as such in line 5.
 
 2. Before doing anything else, S1-1 creates a new Topology Change Notification BPDU and sends it out of Gi0/1 (the bridge's root port) towards Root. Line 1 shows the contents of this BPDU.
 

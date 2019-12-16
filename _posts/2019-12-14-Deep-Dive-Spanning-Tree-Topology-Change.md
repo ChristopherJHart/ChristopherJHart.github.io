@@ -124,6 +124,7 @@ Root#
 S1-1#debug spanning-tree events
 Spanning Tree event debugging is on
 S1-1#debug spanning-tree bpdu
+S1-1#
 
 S1-2#debug spanning-tree events
 Spanning Tree event debugging is on

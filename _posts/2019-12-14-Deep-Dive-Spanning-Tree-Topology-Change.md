@@ -162,7 +162,7 @@ S2-1#undebug all
 All possible debugging has been turned off
 ```
 
-Now, let's review the debugs sent to S1-2's logfile. Note that the "Dec.14.14:38:27" regular expression only shows us debugs that occured immediately after the Gi0/2 interface was shutdown.
+Now, let's review the debugs sent to S1-2's logfile. Note that the "Dec.14.14:38:27" regular expression only shows us debugs that occurred immediately after the Gi0/2 interface was shutdown.
 
 ```
 S1-2#show logging | begin Dec.14.14:38:27  

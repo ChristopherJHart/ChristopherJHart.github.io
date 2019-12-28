@@ -3,9 +3,15 @@ layout: post
 title: Quick Lab - RIPv2 Auto Summary
 ---
 
-Let's nail down the exact behavior behind RIPv2's automatic summarization feature
+RIPv2's automatic network summarization feature is easy to misunderstand, which can be a recipe for disaster in a production environment or on the CCIE R&S lab exam. Let's analyze the exact behavior behind this feature by experimenting with it in a quick lab!
 
 ## Scope
+
+In this lab, we seek answers to the following question:
+
+1. What scenario(s) will cause RIPv2 automatically summarize networks?
+
+2. What is a classful network boundary, and why does RIPv2 summarize around them?
 
 ## Topology
 
@@ -262,7 +268,9 @@ To best understand this, we must first understand what a classful network bounda
 | Class B    | 10NNNNNN.NNNNNNNN.LLLLLLLL.LLLLLLLL | 128.0.0.0/16        | 191.255.0.0/16       |
 | Class C    | 110NNNNN.NNNNNNNN.NNNNNNNN.LLLLLLLL | 192.0.0.0/24        | 223.255.255.0/24     |
 
-The Cisco IOS implementation of RIPv2's automatic route summarization is essentially as follows:
+Individual organizations (such as businesses, universities, etc.) were originally assigned classful networks to use. However, individual organizations often connected to and required networking between each other. Since classful boundaries were typically cleanly split between organizations, RIPv2's automatic summarization feature assisted with reducing the size of routing tables and RIPv2 update packet sizes with minimal effort needed on the part of the network administrators. This was especially important during the early ages of the Internet, as the processing and memory capabilities of routers were much scarcer than they are today.
+
+To accomplish this, rules needed to be implemented in software to have this feature work intelligently. The Cisco IOS implementation of RIPv2's automatic route summarization is essentially as follows:
 
 * If RIPv2 has multiple subprefixes within a classful boundary in the RIP database and needs to send an update message out of an interface **owning a subprefix within the same classful boundary**, then RIPv2 will **not** perform automatic network summarization.
   * In our example, R1 has 10.0.0.0/14 and 10.0.10.0/23 present in the RIP database. It needs to send an update out of Gi0/1, which has an IP address of 10.0.0.1 in the 10.0.0.0/30 network. All three of these networks are subprefixes of the Class A 10.0.0.0/8 network. Since RIPv2 needs to send an update out of Gi0/1 (10.0.0.1), **R1 will not automatically summarize 10.0.0.0/14 and 10.0.10.0/23 to 10.0.0.0/8.**

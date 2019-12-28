@@ -57,7 +57,7 @@ interface Loopback3
 
 interface Loopback4
   no shutdown
-  ip address 10.1.0.1 255.252.0.0
+  ip address 10.4.0.1 255.252.0.0
 
 router rip
   version 2
@@ -113,7 +113,7 @@ Loopback0                  192.168.1.1     YES TFTP   up                    up
 Loopback1                  192.168.2.1     YES TFTP   up                    up
 Loopback2                  192.168.2.129   YES TFTP   up                    up
 Loopback3                  10.0.10.1       YES TFTP   up                    up
-Loopback4                  10.1.0.1        YES TFTP   up                    up
+Loopback4                  10.4.0.1        YES TFTP   up                    up
 ```
 
 Next, let's confirm that RIPv2 is automatically performing network summarization, as well as advertising all desired networks.
@@ -169,12 +169,12 @@ We can see which specific prefixes RIPv2 is advertising through `debug ip rip`:
 R1#debug ip rip
 RIP protocol debugging is on
 R1#
-*Dec 27 13:39:37.978: RIP: sending v2 update to 224.0.0.9 via GigabitEthernet0/1 (10.0.0.1)
-*Dec 27 13:39:37.979: RIP: build update entries
-*Dec 27 13:39:37.979: 	10.0.0.0/14 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:39:37.979: 	10.0.10.0/23 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:39:37.980: 	192.168.1.0/24 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:39:37.980: 	192.168.2.0/24 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:17:42.650: RIP: sending v2 update to 224.0.0.9 via GigabitEthernet0/1 (10.0.0.1)
+*Dec 28 03:17:42.651: RIP: build update entries
+*Dec 28 03:17:42.651: 	10.0.10.0/23 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:17:42.651: 	10.4.0.0/14 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:17:42.652: 	192.168.1.0/24 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:17:42.652: 	192.168.2.0/24 via 0.0.0.0, metric 1, tag 0
 R1#undebug all
 All possible debugging has been turned off
 R1#
@@ -189,17 +189,17 @@ R2's RIPv2 database confirms the prefixes received by R1.
 ```
 R2#show ip rip database
 10.0.0.0/8    auto-summary
-10.0.0.0/14
-    [1] via 10.0.0.1, 00:00:08, GigabitEthernet0/1
 10.0.0.0/30    directly connected, GigabitEthernet0/1
 10.0.10.0/23
-    [1] via 10.0.0.1, 00:00:08, GigabitEthernet0/1
+    [1] via 10.0.0.1, 00:00:01, GigabitEthernet0/1
+10.4.0.0/14
+    [1] via 10.0.0.1, 00:00:01, GigabitEthernet0/1
 192.168.1.0/24    auto-summary
 192.168.1.0/24
-    [1] via 10.0.0.1, 00:00:08, GigabitEthernet0/1
+    [1] via 10.0.0.1, 00:00:01, GigabitEthernet0/1
 192.168.2.0/24    auto-summary
 192.168.2.0/24
-    [1] via 10.0.0.1, 00:00:08, GigabitEthernet0/1
+    [1] via 10.0.0.1, 00:00:01, GigabitEthernet0/1
 ```
 
 A summary of the behavior imposed on all 6 of R1's up/up Layer 3 interfaces can be found in the table below:
@@ -211,7 +211,7 @@ A summary of the behavior imposed on all 6 of R1's up/up Layer 3 interfaces can 
 | 192.168.2.0/25   | Summarized into **192.168.2.0/24**, advertised |
 | 192.168.2.128/25 | Summarized into **192.168.2.0/24**, advertised |
 | 10.0.10.0/23     | Not summarized, advertised as-is               |
-| 10.1.0.0/14      | Not summarized, advertised as-is               |
+| 10.4.0.0/14      | Not summarized, advertised as-is               |
 
 We can confirm that RIPv2's auto-summary feature is causing classless networks 192.168.2.0/25 and 192.168.2.128/25 to be summarized into a Class C 192.168.2.0/24 network by removing the default `auto-summary` configuration from the RIPv2 process on R1.
 
@@ -239,18 +239,61 @@ Now, let's reactivate RIPv2 debugs on R1 to see how many prefixes are being adve
 R1#debug ip rip
 RIP protocol debugging is on
 R1#
-*Dec 27 13:55:26.238: RIP: sending v2 update to 224.0.0.9 via GigabitEthernet0/1 (10.0.0.1)
-*Dec 27 13:55:26.239: RIP: build update entries
-*Dec 27 13:55:26.239: 	10.0.0.0/14 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:55:26.240: 	10.0.10.0/23 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:55:26.240: 	192.168.1.0/24 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:55:26.240: 	192.168.2.0/25 via 0.0.0.0, metric 1, tag 0
-*Dec 27 13:55:26.241: 	192.168.2.128/25 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:18:10.614: RIP: sending v2 update to 224.0.0.9 via GigabitEthernet0/1 (10.0.0.1)
+*Dec 28 03:18:10.615: RIP: build update entries
+*Dec 28 03:18:10.615: 	10.0.10.0/23 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:18:10.615: 	10.4.0.0/14 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:18:10.616: 	192.168.1.0/24 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:18:10.616: 	192.168.2.0/25 via 0.0.0.0, metric 1, tag 0
+*Dec 28 03:18:10.616: 	192.168.2.128/25 via 0.0.0.0, metric 1, tag 0
 R1#undebug all
 All possible debugging has been turned off
 ```
 
-We see all **5** expected prefixes inserted in the RIPv2 update.
+We see all **5** expected prefixes inserted in the RIPv2 update. Checking R2's RIP database, we can also see all 5 prefixes present in the database.
+
+```
+R2#show ip rip database
+10.0.0.0/8    auto-summary
+10.0.0.0/30    directly connected, GigabitEthernet0/1
+10.0.10.0/23
+    [1] via 10.0.0.1, 00:00:07, GigabitEthernet0/1
+10.4.0.0/14
+    [1] via 10.0.0.1, 00:00:07, GigabitEthernet0/1
+192.168.1.0/24    auto-summary
+192.168.1.0/24
+    [1] via 10.0.0.1, 00:00:07, GigabitEthernet0/1
+192.168.2.0/24    auto-summary
+192.168.2.0/25
+    [1] via 10.0.0.1, 00:00:07, GigabitEthernet0/1
+192.168.2.128/25
+    [1] via 10.0.0.1, 00:00:07, GigabitEthernet0/1
+```
+
+Finally, let's confirm that all 5 prefixes are present in R2's routing table.
+
+```
+R2#show ip route rip
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2
+       i - IS-IS, su - IS-IS summary, L1 - IS-IS level-1, L2 - IS-IS level-2
+       ia - IS-IS inter area, * - candidate default, U - per-user static route
+       o - ODR, P - periodic downloaded static route, H - NHRP, l - LISP
+       a - application route
+       + - replicated route, % - next hop override, p - overrides from PfR
+
+Gateway of last resort is not set
+
+      10.0.0.0/8 is variably subnetted, 4 subnets, 4 masks
+R        10.0.10.0/23 [120/1] via 10.0.0.1, 00:00:23, GigabitEthernet0/1
+R        10.4.0.0/14 [120/1] via 10.0.0.1, 00:00:23, GigabitEthernet0/1
+R     192.168.1.0/24 [120/1] via 10.0.0.1, 00:00:23, GigabitEthernet0/1
+      192.168.2.0/25 is subnetted, 2 subnets
+R        192.168.2.0 [120/1] via 10.0.0.1, 00:00:23, GigabitEthernet0/1
+R        192.168.2.128 [120/1] via 10.0.0.1, 00:00:23, GigabitEthernet0/1
+```
 
 The best explanation for this behavior can be found in the ["Configuring Routing Information Protocol" chapter of the IP Routing: RIP Configuration Guide for Cisco IOS Release 15M&T](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_rip/configuration/15-mt/irr-15-mt-book/irr-cfg-info-prot.html). Under the ["RIP Route Summarization" heading](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_rip/configuration/15-mt/irr-15-mt-book/irr-cfg-info-prot.html#GUID-2866E276-1910-4D24-A9C1-B50417E98791), the guide states that automatic summarization happens "by summarizinig subprefixes to the classful network boundary **when crossing classful network boundaries**." Furthermore, under the ["Summarizing RIP Routes" heading](https://www.cisco.com/c/en/us/td/docs/ios-xml/ios/iproute_rip/configuration/15-mt/irr-15-mt-book/irr-cfg-info-prot.html#GUID-882B0911-CCDA-402B-862E-FF1B8BB751AC), the guide states the following:
 
@@ -273,9 +316,9 @@ Individual organizations (such as businesses, universities, etc.) were originall
 To accomplish this, rules needed to be implemented in software to have this feature work intelligently. The Cisco IOS implementation of RIPv2's automatic route summarization is essentially as follows:
 
 * If RIPv2 has multiple subprefixes within a classful boundary in the RIP database and needs to send an update message out of an interface **owning a subprefix within the same classful boundary**, then RIPv2 will **not** perform automatic network summarization.
-  * In our example, R1 has 10.0.0.0/14 and 10.0.10.0/23 present in the RIP database. It needs to send an update out of Gi0/1, which has an IP address of 10.0.0.1 in the 10.0.0.0/30 network. All three of these networks are subprefixes of the Class A 10.0.0.0/8 network. Since RIPv2 needs to send an update out of Gi0/1 (10.0.0.1), **R1 will not automatically summarize 10.0.0.0/14 and 10.0.10.0/23 to 10.0.0.0/8.**
+  * In our example, R1 has 10.4.0.0/14 and 10.0.10.0/23 present in the RIP database. It needs to send an update out of Gi0/1, which has an IP address of 10.0.0.1 in the 10.0.0.0/30 network. All three of these networks are subprefixes of the Class A 10.0.0.0/8 network. Since RIPv2 needs to send an update out of Gi0/1 (10.0.0.1), **R1 will not automatically summarize 10.4.0.0/14 and 10.0.10.0/23 to 10.0.0.0/8.**
 * If RIPv2 has multiple subprefixes within a classful boundary in the RIP database and needs to send an update message out of an interface that has an IP address **within a different classful boundary**, then RIPv2 **will** perform automatic network summarization.
-  * For example, let's say a new interface Gi0/2 is created. This interface has an IP address of 11.0.0.1/30, connects to a third router, and is activated in the RIP process with `network 11.0.0.0` configuration. RIPv2 will automatically summarize 10.0.0.0/14, 10.0.10.0/23, and 10.0.0.0/30 into a single 10.0.0.0/8 classful prefix that is advertised out the Gi0/2 interface towards the third router.
+  * For example, let's say a new interface Gi0/2 is created. This interface has an IP address of 11.0.0.1/30, connects to a third router, and is activated in the RIP process with `network 11.0.0.0` configuration. RIPv2 will automatically summarize 10.4.0.0/14, 10.0.10.0/23, and 10.0.0.0/30 into a single 10.0.0.0/8 classful prefix that is advertised out the Gi0/2 interface towards the third router.
 
 RIPv2's automatic summarization feature is often misunderstood - I hope that this helped you understand it better!
 

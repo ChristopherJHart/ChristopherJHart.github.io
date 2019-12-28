@@ -162,7 +162,7 @@ S2-1#undebug all
 All possible debugging has been turned off
 ```
 
-Now, let's review the debugs sent to S1-2's logfile. Note that the "Dec.14.14:38:27" regular expression only shows us debugs that occured immediately after the Gi0/2 interface was shutdown.
+Now, let's review the debugs sent to S1-2's logfile. Note that the "Dec.14.14:38:27" regular expression only shows us debugs that occurred immediately after the Gi0/2 interface was shutdown.
 
 ```
 S1-2#show logging | begin Dec.14.14:38:27  
@@ -190,7 +190,7 @@ The four events are:
 
 2. S1-2 generates a Configuration BPDU on Gi0/2 (the interface that was *just* administratively shut down). At first, this might not make sense (after all, why would Spanning Tree attempt to send a Configuration BPDU out of an interface that is down?) However, since the Spanning Tree process on S1-2 has not yet sent a Topology Change Notification BPDU towards the root bridge, the Spanning Tree process is most likely not yet aware that the Gi0/2 interface is down at the moment. As a result, Spanning Tree would likely hand the Configuration BPDU generated in this debug to the data plane, which would subsequently drop it since it cannot forward a frame out of an interface that is down.
 
-3. About a second later, S1-2 generates a Topology Change Notification BPDU out of Gi0/1. This indicates that the Spanning Tree process is now aware that Gi0/1 is down, and that a topology change has occurred. Just like the debug on the fourth line of the first event, this debug logically separates each part of the BPDU to make it easier to read. In this debug, the third section is set to `0x80`. This indicates that this is a Topology Change Notification BPDU. This stands in contrast to the `0x00` value seen in line four of the first event, which indicates the BPDU is a Configuration BPDU.
+3. About a second later, S1-2 generates a Topology Change Notification BPDU out of Gi0/1. This indicates that the Spanning Tree process is now aware that Gi0/2 is down, and that a topology change has occurred. Just like the debug on the fourth line of the first event, this debug logically separates each part of the BPDU to make it easier to read. In this debug, the third section is set to `0x80`. This indicates that this is a Topology Change Notification BPDU. This stands in contrast to the `0x00` value seen in line four of the first event, which indicates the BPDU is a Configuration BPDU.
 
 4. Finally, the Spanning Tree process reports that it has sent a Topology Change Notification (in this case, the debug calls it a "Notice") out of the root port, Gi0/1.
 
@@ -224,7 +224,7 @@ These debugs show three separate events that occurred on S1-1:
 
 3. Finally, S1-1 sends a Configuration BPDU out of Gi0/2 towards S1-2 with a value of `0x80` in the fourth field, as shown by line 2. If you convert `0x80` to binary, you get `1000 0000`. The most significant bit of the BPDU Flags field is the "Topology Change Acknowledgment" bit. As such, this Configuration BPDU is informing the downstream bridge (S1-2) that the Topology Change Notification BPDU has been received. If S1-2 did *not* receive this BPDU, S1-2 would continue sending Topology Change Notification BPDUs at the expiration of each Hello timer (that is, every 2 seconds by default).
 
-Take a second to think about why S1-1 chooses to send a Topology Change Notification BPDU to the root bridge *before* sending an acknowledgment to S1-2 that S1-2's Topology Change Notification BPDU was received. From a protocol philosophy perspective, this makes perfect sense. If you were designing a hierarchical protocol that needs to rapidly react to a topology change, and you made the decision that the head of the hierarchy (in this case, the root bridge) is responsible for propagating information about the topology change, you would want hierarchy members (bridges) to inform the hierarchy head (root bridge) about the change as rapidly as possible so that the *rest* of the hierarchy can react to the topology change. Therefore, when an intermediate bridge receives new that a topology change has occurred from a downstream bridge, the bridge should prioritize passing along the news towards the root bridge over acknowledging receipt of the news.
+Take a second to think about why S1-1 chooses to send a Topology Change Notification BPDU to the root bridge *before* sending an acknowledgment to S1-2 that S1-2's Topology Change Notification BPDU was received. From a protocol philosophy perspective, this makes perfect sense. If you were designing a hierarchical protocol that needs to rapidly react to a topology change, and you made the decision that the head of the hierarchy (in this case, the root bridge) is responsible for propagating information about the topology change, you would want hierarchy members (bridges) to inform the hierarchy head (root bridge) about the change as rapidly as possible so that the *rest* of the hierarchy can react to the topology change. Therefore, when an intermediate bridge receives the news that a topology change has occurred from a downstream bridge, the bridge should prioritize passing along the news towards the root bridge over acknowledging receipt of the news.
 
 The screenshot below shows the Configuration BPDU with the "Topology Change Acknowledgment" flag set that is sent from S1-1 to S1-2 from a Wireshark perspective.
 
@@ -249,7 +249,7 @@ Root#show logging | begin Dec.14.14:38
 
 These debugs show three separate events that occurred on Root:
 
-1. Root receives the Topology Change Notification BPDU from Gi0/1, as shown by line 1. You can tell that this is the Topology Change Notification BPDU sent by S1-1 because of the `0x80` value in the third field of the BPDU shown in line 4. Root recognizes this as a Topology Change Notification BPDU and logs it as such in line 4.
+1. Root receives the Topology Change Notification BPDU from Gi0/1, as shown by line 1. You can tell that this is the Topology Change Notification BPDU sent by S1-1 because of the `0x80` value in the third field of the BPDU shown in line 3. Root recognizes this as a Topology Change Notification BPDU and logs it as such in line 4.
 
 2. Root sends a Configuration BPDU out of Gi0/1 with the Topology Change Acknowledgment and Topology Change bits set in the BPDU Flags field. As shown in line 2, the fourth section of the BPDU has a value of `0x81`. If you convert `0x81` to binary, you get `1000 0001`. The most significant bit of the BPDU Flags field is the "Topology Change Acknowledgment" bit, while the least significant bit of the BPDU Flags field is the "Topology Change" bit. Root is sending a Configuration BPDU to S1-2 acknowledging that it received S1-2's Topology Change Notification BPDU, as well as informing it that there was a change in the topology of the spanning tree.
 
@@ -282,15 +282,15 @@ S2-1#show logging | beg Dec.14.14:38:28
 <snip>
 1 | Dec 14 14:38:28.547: STP: VLAN0001 rx BPDU: config protocol = ieee, packet from GigabitEthernet0/1  , linktype IEEE_SPANNING , enctype 2, encsize 17    <<<-|
 2 | Dec 14 14:38:28.548: STP: enc 01 80 C2 00 00 00 FA 16 3E 12 11 90 00 26 42 42 03                                                                        <<< |
-3 | Dec 14 14:38:28.555: STP: Data     000000000060015E00000000000000000060015E000000000080030000140002000F00                                               <<< |- 1.
-4 | Dec 14 14:38:28.567: STP: VLAN0001 Gi0/1:0000 00 00 00 60015E0000000000 00000000 60015E0000000000 8003 0000 1400 0200 0F00                              <<< |
+3 | Dec 14 14:38:28.555: STP: Data     000000000160015E00000000000000000060015E000000000080030000140002000F00                                               <<< |- 1.
+4 | Dec 14 14:38:28.567: STP: VLAN0001 Gi0/1:0000 00 00 01 60015E0000000000 00000000 60015E0000000000 8003 0000 1400 0200 0F00                              <<< |
 5 | Dec 14 14:38:28.579: STP(1) port Gi0/1 supersedes 0                                                                                                     <<<-|
 
 1 | Dec 14 14:38:28.581: STP: VLAN0001 Gi0/2 tx BPDU: config protocol=ieee                                                                                  <<<-|- 2.
-2 |     Data : 0000 00 00 00 60015E0000000000 00000004 80015E0000020000 8003 0100 1400 0200 0F00                                                            <<<-|
+2 |     Data : 0000 00 00 01 60015E0000000000 00000004 80015E0000020000 8003 0100 1400 0200 0F00                                                            <<<-|
 
 1 | Dec 14 14:38:28.592: STP: VLAN0001 Gi0/3 tx BPDU: config protocol=ieee                                                                                  <<<-|- 3.
-2 |     Data : 0000 00 00 00 60015E0000000000 00000004 80015E0000020000 8004 0100 1400 0200 0F00                                                            <<<-|
+2 |     Data : 0000 00 00 01 60015E0000000000 00000004 80015E0000020000 8004 0100 1400 0200 0F00                                                            <<<-|
 ```
 
 The screenshot below shows the Configuration BPDU with only the "Topology Change" bit set sent from Root to S2-1 from a Wireshark perspective.

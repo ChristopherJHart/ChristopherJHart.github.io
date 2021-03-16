@@ -9,7 +9,7 @@ At the moment, Windows 10's implementation of the OpenSSH client does not have t
 
 **Note:** If you have already generated an SSH keypair that you would like to use, skip this section and proceed to the [Copy SSH Key to Remote Linux Device](#copy-ssh-key-to-remote-linux-device) section.
 
-First, open a new PowerShell window and generate a new SSH keypair with the `ssh-keygen` command. By default, the public and private keys will be placed in the `%USERPROFILE%/.ssh/` directory. The public key file we are interested in is named `id_rsa.pub`.
+First, open a new PowerShell window (*not* a Command Prompt window!) and generate a new SSH keypair with the `ssh-keygen` command. By default, the public and private keys will be placed in the `%USERPROFILE%/.ssh/` directory. The public key file we are interested in is named `id_rsa.pub`.
 
 ```
 PS C:\Users\Christopher> ssh-keygen

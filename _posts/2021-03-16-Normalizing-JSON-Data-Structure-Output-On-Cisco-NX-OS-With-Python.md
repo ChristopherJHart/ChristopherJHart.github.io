@@ -15,7 +15,7 @@ The purpose of this post is twofold:
 
 ## The Problem
 
-Ivan's blog post does an excellent job of demonstrating this problem, but to recap, I'll demonstrate my own example of the issue.
+Ivan's blog post does an excellent job of demonstrating this problem, but to recap, I'll demonstrate my own example of the issue. This example was recreated using Nexus 9300v switches in CML2.1.
 
 Consider a very simple topology where two Nexus 9000 switches (hostnames N9K-1 and N9K-2) are connected to each other via routed interface Ethernet1/1. An EIGRP process in ASN 1 is activated on Ethernet1/1.
 

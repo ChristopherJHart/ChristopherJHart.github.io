@@ -58,12 +58,7 @@ N9K-1(9EKQZIXEMGZ)
 Total entries displayed: 1
 
 N9K-1# show running-config eigrp
-
-!Command: show running-config eigrp
-!Running configuration last done at: Tue Mar 16 19:55:34 2021
-!Time: Tue Mar 16 20:43:39 2021
-
-version 9.3(7) Bios:version
+<snip>
 feature eigrp
 
 router eigrp 1
@@ -75,12 +70,7 @@ interface Ethernet1/1
   ip router eigrp 1
 
 N9K-2# show running-config eigrp
-
-!Command: show running-config eigrp
-!Running configuration last done at: Tue Mar 16 19:55:54 2021
-!Time: Tue Mar 16 20:43:47 2021
-
-version 9.3(7) Bios:version
+<snip>
 feature eigrp
 
 router eigrp 1

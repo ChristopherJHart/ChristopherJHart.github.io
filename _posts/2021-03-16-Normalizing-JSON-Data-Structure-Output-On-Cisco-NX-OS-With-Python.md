@@ -3,12 +3,15 @@ layout: post
 title: Normalizing JSON Data Structure Output on Cisco NX-OS with Python
 ---
 
-Earlier this year, [Ivan Pepelnjak wrote a blog post](https://blog.ipspace.net/2021/01/xml-json-cisco-nexus.html) on how the way network operating systems (including Cisco's NX-OS) convert XML-based data structures to JSON can cause certain keys to be either a dictionary or a list, depending on the quantity of elements nested within a parent element. Ivan's blog post does an excellent job of providing multiple workarounds for this issue, such as using an Ansible filter or using NX-API with the cli_array method to normalize the data. However, neither of these workarounds are applicable to you if you have a niche use case where you need to run a Python script within NX-OS and cannot rely on NX-API being configured.
+Earlier this year, [Ivan Pepelnjak wrote a blog post](https://blog.ipspace.net/2021/01/xml-json-cisco-nexus.html) on how the way network operating systems (including Cisco's NX-OS) convert XML-based data structures to JSON can cause certain keys to be either a dictionary or a list, depending on the quantity of elements nested within a parent element. Ivan's blog post does an excellent job of providing multiple workarounds for this issue, such as using an Ansible filter or using NX-API with the cli_array method to normalize the data. However, neither of these workarounds are applicable to you if you have either of the following use cases:
+
+1. You need to parse structured output from a Nexus switch received via SSH (such as with the Netmiko or Scrapli libraries).
+2. You need to parse strucutred output from a Nexus switch using a on-the-box Python script.
 
 The purpose of this post is twofold:
 
 1. Demonstrate this problem where JSON output from NX-OS may contain either a dictionary or a list, depending on the quantity of elements nested within a parent element.
-2. Provide a Python 3 utility function that can normalize this data for uses cases wherein you must run a Python script within NX-OS itself instead of leveraging NX-API or Ansible.
+2. Provide a Python 3 utility function that can normalize this data for the aforementioned use cases instead of leveraging NX-API or Ansible.
 
 ## The Problem
 

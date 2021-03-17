@@ -227,7 +227,69 @@ Let's take another look at the JSON output of the `show ip eigrp neighbors` comm
 
 We can see that the value of the `ROW_asn` key is now a **list**, not a **dictionary**. This is problematic from a Python perspective because the way that one consumes the data in a dictionary is different from the way that one consumes the data in a list. It's not impossible to write code that can handle scenarios where the value of a dictionary key is either a dictionary or a list, but doing so can be difficult to consume, maintain, and test.
 
-It would be *much* easier for us if every key containing the phrase "ROW_" was a list - whether it contains one element, or multiple elements. This leads us to [The Solution](#the-solution).
+It would be *much* easier for us if every key containing the phrase "ROW_" was a list - whether it contains one element, or multiple elements. If you are running NX-OS software release 9.3(1) or later, you can use the `json native` pipe instead of the `json` pipe to accomplish this, as shown below.
+
+```
+N9K-1# show ip eigrp neighbors | json-pretty native
+{
+    "TABLE_asn": {
+        "ROW_asn": [
+            {
+                "asn": 1,
+                "TABLE_vrf": {
+                    "ROW_vrf": [
+                        {
+                            "vrf": "default",
+                            "TABLE_peer": {
+                                "ROW_peer": [
+                                    {
+                                        "peer_handle": 0,
+                                        "peer_ipaddr": "10.1.0.1",
+                                        "peer_ifname": "Eth1/1",
+                                        "peer_holdtime": 13,
+                                        "peer_srtt": 6,
+                                        "peer_rto": 50,
+                                        "peer_xmitq_count": 0,
+                                        "peer_last_seqno": 4,
+                                        "peer_uptime": "PT16H7M38S"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "asn": 2,
+                "TABLE_vrf": {
+                    "ROW_vrf": [
+                        {
+                            "vrf": "default",
+                            "TABLE_peer": {
+                                "ROW_peer": [
+                                    {
+                                        "peer_handle": 0,
+                                        "peer_ipaddr": "10.1.0.1",
+                                        "peer_ifname": "Eth1/1",
+                                        "peer_holdtime": 13,
+                                        "peer_srtt": 7,
+                                        "peer_rto": 50,
+                                        "peer_xmitq_count": 0,
+                                        "peer_last_seqno": 3,
+                                        "peer_uptime": "PT15H18M47S"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
+```
+
+However, at the time of this writing, NX-OS 9.3(1) and later are the upcoming long-lived release, not the current recommended NX-OS software release. If you are not yet running NX-OS software where the `json native` pipe is available, you'll need an alternative solution.
 
 ## The Solution
 

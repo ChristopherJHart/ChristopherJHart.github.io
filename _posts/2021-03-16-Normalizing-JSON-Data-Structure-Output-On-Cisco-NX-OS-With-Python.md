@@ -98,7 +98,7 @@ H   Address                 Interface       Hold  Uptime  SRTT   RTO  Q  Seq
 0   10.1.0.0                Eth1/1          10   00:45:42  16   96    0   4
 ```
 
-If we analyze the output of the `show ip eigrp neighbors` command in a JSON data structure with the, we can see that all keys with the phrase "ROW" in it (such as `ROW_asn`, `ROW_vrf`, and `ROW_peer`) have a corresponding value that is a dictionary.
+If we analyze the output of the `show ip eigrp neighbors` command in a JSON data structure with the, we can see that all keys with the phrase "ROW_" in it (such as `ROW_asn`, `ROW_vrf`, and `ROW_peer`) have a corresponding value that is a dictionary.
 
 ```json
 {

@@ -1,0 +1,449 @@
+<!DOCTYPE html><html lang="en" ><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta name="day-prompt" content="days ago"><meta name="hour-prompt" content="hours ago"><meta name="minute-prompt" content="minutes ago"><meta name="justnow-prompt" content="just now"><meta name="generator" content="Jekyll v4.2.1" /><meta property="og:title" content="Automating Base Configuration in a Cisco Networking Homelab" /><meta property="og:locale" content="en" /><meta name="description" content="Let’s face it: resetting Cisco devices in your homelab to factory defaults is painful. The process of plugging in a console cable, erasing the contents of the NVRAM, reloading the device, then initially configuring the device so that you can remotely access it is bearable for a single device, but most networking homelabs have six devices, sometimes more! Modern Cisco devices solve this issue with dedicated management interfaces that retain their configuration even after a write erase command, but these devices tend to be outside the budget of somebody studying for their CCNA or CCNP. One common solution is a router acting as a terminal server, which uses reverse telnet to remotely console into devices using the console or aux ports; however, the total cost of such a project easily can be hundreds of dollars and can be difficult for somebody new to Cisco devices to configure." /><meta property="og:description" content="Let’s face it: resetting Cisco devices in your homelab to factory defaults is painful. The process of plugging in a console cable, erasing the contents of the NVRAM, reloading the device, then initially configuring the device so that you can remotely access it is bearable for a single device, but most networking homelabs have six devices, sometimes more! Modern Cisco devices solve this issue with dedicated management interfaces that retain their configuration even after a write erase command, but these devices tend to be outside the budget of somebody studying for their CCNA or CCNP. One common solution is a router acting as a terminal server, which uses reverse telnet to remotely console into devices using the console or aux ports; however, the total cost of such a project easily can be hundreds of dollars and can be difficult for somebody new to Cisco devices to configure." /><link rel="canonical" href="https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/" /><meta property="og:url" content="https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/" /><meta property="og:site_name" content="Christopher Hart" /><meta property="og:type" content="article" /><meta property="article:published_time" content="2017-08-08T00:00:00-04:00" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Automating Base Configuration in a Cisco Networking Homelab" /><meta name="twitter:site" content="@_ChrisJHart" /><meta name="google-site-verification" content="google_meta_tag_verification" /> <script type="application/ld+json"> {"description":"Let’s face it: resetting Cisco devices in your homelab to factory defaults is painful. The process of plugging in a console cable, erasing the contents of the NVRAM, reloading the device, then initially configuring the device so that you can remotely access it is bearable for a single device, but most networking homelabs have six devices, sometimes more! Modern Cisco devices solve this issue with dedicated management interfaces that retain their configuration even after a write erase command, but these devices tend to be outside the budget of somebody studying for their CCNA or CCNP. One common solution is a router acting as a terminal server, which uses reverse telnet to remotely console into devices using the console or aux ports; however, the total cost of such a project easily can be hundreds of dollars and can be difficult for somebody new to Cisco devices to configure.","url":"https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/","@type":"BlogPosting","headline":"Automating Base Configuration in a Cisco Networking Homelab","dateModified":"2017-08-08T00:00:00-04:00","datePublished":"2017-08-08T00:00:00-04:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/"},"@context":"https://schema.org"}</script><title>Automating Base Configuration in a Cisco Networking Homelab | Christopher Hart</title><link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicons/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/assets/img/favicons/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/assets/img/favicons/favicon-16x16.png"><link rel="manifest" href="/assets/img/favicons/site.webmanifest"><link rel="shortcut icon" href="/assets/img/favicons/favicon.ico"><meta name="apple-mobile-web-app-title" content="Christopher Hart"><meta name="application-name" content="Christopher Hart"><meta name="msapplication-TileColor" content="#da532c"><meta name="msapplication-config" content="/assets/img/favicons/browserconfig.xml"><meta name="theme-color" content="#ffffff"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://fonts.gstatic.com"><link rel="preconnect" href="https://www.google-analytics.com" crossorigin="use-credentials"><link rel="dns-prefetch" href="https://www.google-analytics.com"><link rel="preconnect" href="https://www.googletagmanager.com" crossorigin="anonymous"><link rel="dns-prefetch" href="https://www.googletagmanager.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.11.2/css/all.min.css"><link rel="stylesheet" href="/assets/css/style.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/magnific-popup@1.1.0/dist/magnific-popup.min.css"> <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><body data-spy="scroll" data-target="#toc"><div id="sidebar" class="d-flex flex-column align-items-end" lang="en"><div class="profile-wrapper text-center"><div id="avatar"> <a href="/" alt="avatar" class="mx-auto"> <img src="https://avatars3.githubusercontent.com/u/13562529" alt="avatar" onerror="this.style.display='none'"> </a></div><div class="site-title mt-3"> <a href="/">Christopher Hart</a></div><div class="site-subtitle font-italic">Documenting my discoveries in the IT world</div></div><ul class="w-100"><li class="nav-item"> <a href="/" class="nav-link"> <i class="fa-fw fas fa-home ml-xl-3 mr-xl-3 unloaded"></i> <span>HOME</span> </a><li class="nav-item"> <a href="/categories/" class="nav-link"> <i class="fa-fw fas fa-stream ml-xl-3 mr-xl-3 unloaded"></i> <span>CATEGORIES</span> </a><li class="nav-item"> <a href="/tags/" class="nav-link"> <i class="fa-fw fas fa-tag ml-xl-3 mr-xl-3 unloaded"></i> <span>TAGS</span> </a><li class="nav-item"> <a href="/archives/" class="nav-link"> <i class="fa-fw fas fa-archive ml-xl-3 mr-xl-3 unloaded"></i> <span>ARCHIVES</span> </a><li class="nav-item"> <a href="/about/" class="nav-link"> <i class="fa-fw ml-xl-3 mr-xl-3 unloaded"></i> <span>ABOUT</span> </a></ul><div class="sidebar-bottom mt-auto d-flex flex-wrap justify-content-center align-items-center"> <a href="https://github.com/ChristopherJHart" aria-label="github" class="order-3" target="_blank" rel="noopener"> <i class="fab fa-github"></i> </a> <a href="https://twitter.com/_ChrisJHart" aria-label="twitter" class="order-4" target="_blank" rel="noopener"> <i class="fab fa-twitter"></i> </a> <a href=" javascript:location.href = 'mailto:' + ['christopherjhart95','gmail.com'].join('@')" aria-label="email" class="order-5" > <i class="fas fa-envelope"></i> </a> <a href="/feed.xml" aria-label="rss" class="order-6" > <i class="fas fa-rss"></i> </a> <span class="icon-border order-2"></span> <span id="mode-toggle-wrapper" class="order-1"> <i class="mode-toggle fas fa-adjust"></i> <script type="text/javascript"> class ModeToggle { static get MODE_KEY() { return "mode"; } static get DARK_MODE() { return "dark"; } static get LIGHT_MODE() { return "light"; } constructor() { if (this.hasMode) { if (this.isDarkMode) { if (!this.isSysDarkPrefer) { this.setDark(); } } else { if (this.isSysDarkPrefer) { this.setLight(); } } } var self = this; /* always follow the system prefers */ this.sysDarkPrefers.addListener(function() { if (self.hasMode) { if (self.isDarkMode) { if (!self.isSysDarkPrefer) { self.setDark(); } } else { if (self.isSysDarkPrefer) { self.setLight(); } } self.clearMode(); } self.updateMermaid(); }); } /* constructor() */ setDark() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.DARK_MODE); } setLight() { $('html').attr(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); sessionStorage.setItem(ModeToggle.MODE_KEY, ModeToggle.LIGHT_MODE); } clearMode() { $('html').removeAttr(ModeToggle.MODE_KEY); sessionStorage.removeItem(ModeToggle.MODE_KEY); } get sysDarkPrefers() { return window.matchMedia("(prefers-color-scheme: dark)"); } get isSysDarkPrefer() { return this.sysDarkPrefers.matches; } get isDarkMode() { return this.mode == ModeToggle.DARK_MODE; } get isLightMode() { return this.mode == ModeToggle.LIGHT_MODE; } get hasMode() { return this.mode != null; } get mode() { return sessionStorage.getItem(ModeToggle.MODE_KEY); } /* get the current mode on screen */ get modeStatus() { if (this.isDarkMode || (!this.hasMode && this.isSysDarkPrefer) ) { return ModeToggle.DARK_MODE; } else { return ModeToggle.LIGHT_MODE; } } updateMermaid() { if (typeof mermaid !== "undefined") { let expectedTheme = (this.modeStatus === ModeToggle.DARK_MODE? "dark" : "default"); let config = { theme: expectedTheme }; /* re-render the SVG › <https://github.com/mermaid-js/mermaid/issues/311#issuecomment-332557344> */ $(".mermaid").each(function() { let svgCode = $(this).prev().children().html(); $(this).removeAttr("data-processed"); $(this).html(svgCode); }); mermaid.initialize(config); mermaid.init(undefined, ".mermaid"); } } flipMode() { if (this.hasMode) { if (this.isSysDarkPrefer) { if (this.isLightMode) { this.clearMode(); } else { this.setLight(); } } else { if (this.isDarkMode) { this.clearMode(); } else { this.setDark(); } } } else { if (this.isSysDarkPrefer) { this.setLight(); } else { this.setDark(); } } this.updateMermaid(); } /* flipMode() */ } /* ModeToggle */ let toggle = new ModeToggle(); $(".mode-toggle").click(function() { toggle.flipMode(); }); </script> </span></div></div><div id="topbar-wrapper" class="row justify-content-center topbar-down"><div id="topbar" class="col-11 d-flex h-100 align-items-center justify-content-between"> <span id="breadcrumb"> <span> <a href="/"> Home </a> </span> <span>Automating Base Configuration in a Cisco Networking Homelab</span> </span> <i id="sidebar-trigger" class="fas fa-bars fa-fw"></i><div id="topbar-title"> Post</div><i id="search-trigger" class="fas fa-search fa-fw"></i> <span id="search-wrapper" class="align-items-center"> <i class="fas fa-search fa-fw"></i> <input class="form-control" id="search-input" type="search" aria-label="search" autocomplete="off" placeholder="Search..."> <i class="fa fa-times-circle fa-fw" id="search-cleaner"></i> </span> <span id="search-cancel" >Cancel</span></div></div><div id="main-wrapper"><div id="main"><div class="row"><div id="post-wrapper" class="col-12 col-lg-11 col-xl-8"><div class="post pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><h1 data-toc-skip>Automating Base Configuration in a Cisco Networking Homelab</h1><div class="post-meta text-muted d-flex flex-column"><div> <span class="semi-bold"> Christopher Hart </span> on <span class="timeago " data-toggle="tooltip" data-placement="bottom" title="Tue, Aug 8, 2017, 12:00 AM -0400" >Aug 8, 2017<i class="unloaded">2017-08-08T00:00:00-04:00</i> </span></div><div> <span class="readtime" data-toggle="tooltip" data-placement="bottom" title="2857 words">15 min read</span></div></div><div class="post-content"><p>Let’s face it: resetting Cisco devices in your homelab to factory defaults is painful. The process of plugging in a console cable, erasing the contents of the NVRAM, reloading the device, then initially configuring the device so that you can remotely access it is bearable for a single device, but most networking homelabs have six devices, sometimes more! Modern Cisco devices solve this issue with dedicated management interfaces that retain their configuration even after a write erase command, but these devices tend to be outside the budget of somebody studying for their CCNA or CCNP. One common solution is a router acting as a terminal server, which uses reverse telnet to remotely console into devices using the console or aux ports; however, the total cost of such a project easily can be hundreds of dollars and can be difficult for somebody new to Cisco devices to configure.</p><p>Cisco’s AutoInstall feature provides a convenient automation solution to this issue while minimizing expensive hardware purchases. By configuring a device connected to our homelab to act as a TFTP and DHCP server, we can automatically push an initial configuration to each of our Cisco devices that have been remotely reset to factory settings. This service automatically provides remote access, AAA configuration, and much more to our devices after resetting them!</p><h2 id="requirements">Requirements</h2><p>According to <a href="https://cfn.cloudapps.cisco.com/ITDIT/CFN/jsp/index.jsp">Cisco’s Feature Navigator</a>, Cisco introduced AutoInstall in IOS Release 12.1(5)T, which was released in the early 2000s and reached end-of-support in 2013. This means that the vast majority of Cisco devices on the used market should be running 12.1 or higher. As an example, the oldest image available for download from Cisco for the very-popular CISCO1841 router is 12.3(8)YG4, and I have confirmed that Cisco AutoInstall is supported at this version with IP Base licensing.</p><p>Another feature we’re going to utilize is TCL, which we will use to write configurations to a file. Support for TCL was introduced in 12.2(33)IRA, which is still old enough that compatibility should not be an issue for the vast majority of networking pods.</p><p>If you’re going to be using a Cisco device to serve as your DHCP and TFTP server, you will need to ensure that the device is capable of running at least IOS 12.2(33)SRA or greater. This software is the earliest release where both DHCP pools and TFTP server configuration is supported.</p><p>The base configurations that I will be creating are designed to provide remote access to a device by bringing up an interface, assigning an IP address to it, creating a new user with a password, creating a secret password, and requiring users to log into the device when accessed through VTY lines. This configuration works well with the topology below, where every device in the pod is connected via Ethernet to a management switch reachable at 192.168.0.1. In our topology, the management switch (a Catalyst 3560) will be providing management connectivity to all devices in the pod, as well as serving as our DHCP and TFTP server.</p><p><img data-proofer-ignore data-src="/images/2017-8-Config-Replace-Topology.png" alt="" /></p><p>Your topology could replace the management switch with a dumb switch and have a host (such as a Raspberry Pi) connected to it, which would serve as your DHCP and TFTP server. The details do not matter – the end goal of this topology is that each device dedicates a single Ethernet interface for a management network, and the rest of the interfaces can be used for practicing configuration as you normally would in a lab. You remotely access all of the devices in your lab via Telnet, and when you finish with your lab and wish to erase your work, you simply reset each device to factory settings via a <code class="language-plaintext highlighter-rouge">write erase</code> command and a reload. When the device boots up, it will automatically pull your base configuration from the TFTP server. <strong>Your base configuration can contain whatever configuration best suits your needs</strong>: The goal of this article is to show you an example of what can be automated in your pod without the need for moving a console cable from device to device.</p><h2 id="testing">Testing</h2><p>I attempted to utilize equipment that likely would be found in a CCNA or CCNP certification homelab wherever possible. However, my testing is not comprehensive; it is entirely possible that you may encounter issues with your equipment due to the multiple different combinations of Cisco hardware and software that are available.</p><ul><li>Management Switch<ul><li>WS-C3560X-24P-L running 15.2(3)E</ul><li>Router Clients<ul><li>CISCO1841 running 15.1(4)M12A<li>C2620XM-1FE running 12.4(25d)<li>C1861E-SRST-F/K9 running 15.2(4)M3</ul><li>Switch Client<ul><li>WS-C3560X-24P-L running 15.2(3)E</ul></ul><p>If you encounter issues with configuring AutoInstall on your equipment, I highly recommend updating to the latest recommended version of code, if at all possible. If that is not a feasible option, feel free to contact me with your software, hardware, and configurations! I would be more than happy to review your setup and point out any issues I can find.</p><h2 id="procedure">Procedure</h2><p>Our first step is going to be configuring our management switch to act as a DHCP server. Again, any switch can be used (whether it be a smart/managed switch or a dumb switch), so long as all devices are plugged into the switch, and the device that serves as your TFTP and DHCP server is plugged into the switch too. The following procedure assumes that you are using a Cisco device to provide TFTP and DHCP services to your networking pod.</p><p>First, let’s configure DHCP on our switch by creating a pool named LAB-DHCP, setting the scope of the pool to 192.168.0.0/24, setting our default router to 192.168.0.1, setting the TFTP server IP address option (150) of our DHCP pool to point to 192.168.0.1, and excluding the switch’s own IP (192.168.0.1) from the DHCP pool. Then, we’re going to assign 192.168.0.1/24 to our Vlan 1 interface.</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+</pre><td class="rouge-code"><pre>Management#configure terminal
+Management(config)#ip dhcp pool LAB-DHCP
+Management(dhcp-config)#network 192.168.0.0 255.255.255.0
+Management(dhcp-config)#default-router 192.168.0.1
+Management(dhcp-config)#option 150 ip 192.168.0.1
+Management(dhcp-config)#exit
+Management(config)#ip dhcp excluded-address 192.168.0.1
+Management(config)#interface Vlan1
+Management(config-if)#ip address 192.168.0.1 255.255.255.0
+Management(config-if)#no shut
+Management(config-if)#end
+</pre></table></code></div></div><p>At this point, if you go to another device in your topology and configure <code class="language-plaintext highlighter-rouge">ip address dhcp</code> on your interface facing the management switch, you should be able to obtain an IP address in the 192.168.0.0/24 range.</p><p>Before we configure our management switch to act as a TFTP server, we need to create the base configuration to be used across all our devices. The reasoning behind this is that in order to configure a device as a TFTP server in Cisco IOS, we need to choose individual files that we wish to be accessed via TFTP. As of right now, we don’t have a file that we can serve via TFTP.</p><p>To create our base configuration, we’re going to be using the TCL shell on our management switch to write commands to a file. This option is better than copying a base configuration from one of our devices, as our networking pod may have a mixture of device models, images, and types. A base configuration derived from one of those devices may cause configuration errors on other devices if interface names, image versions, or capabilities are different. When we create our configuration, we’re going to want to make sure we name it <code class="language-plaintext highlighter-rouge">network-confg</code>, as AutoInstall requires base configurations to be named either <code class="language-plaintext highlighter-rouge">network-confg</code> or <code class="language-plaintext highlighter-rouge">cisconet.cfg</code>.</p><p>We can access the TCL shell from privileged EXEC mode by typing the <code class="language-plaintext highlighter-rouge">tclsh</code> command; you should see your prompt change from <code class="language-plaintext highlighter-rouge">Hostname#</code> to <code class="language-plaintext highlighter-rouge">Hostname(tcl)#</code>, which indicates a successful transition. From this point forward, you want to tailor your base configuration to your specific needs; as I described above, my base configuration is only going to contain the necessary configuration to establish telnet connection from the management switch using a username, password, and secret of “cisco”. My commands in the TCL shell, as well as my base configuration are shown below – feel free to customize it to fit your environment.</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>Management(tcl)#puts [ open "flash:network-confg" w+ ] {
++&gt;hostname BASE-CONFIG
++&gt;enable secret cisco
++&gt;ip domain name chrisjhart.com
++&gt;username cisco password cisco
++&gt;line vty 0 4
++&gt; logging synchronous
++&gt; login local
++&gt; transport input all
++&gt;line vty 5 15
++&gt; logging synchronous
++&gt; login local
++&gt; transport input all
++&gt;end
++&gt;}
+Management(tcl)#tclquit
+Management#
+</pre></table></code></div></div><p>We can confirm that our file wrote correctly by using the <code class="language-plaintext highlighter-rouge">more</code> command, which will output the contents of a file, as shown below:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+</pre><td class="rouge-code"><pre>Management#more flash:base-confg
+hostname BASE-CONFIG
+enable secret cisco
+ip domain name chrisjhart.com
+username cisco password cisco
+line vty 0 4
+ logging synchronous
+ login local
+ transport input all
+line vty 5 15
+ logging synchronous
+ login local
+ transport input all
+end
+
+Management#
+</pre></table></code></div></div><p>Finally, let’s enable the TFTP server on our management switch…</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre><td class="rouge-code"><pre>Management#configure terminal
+Management(config)#tftp-server flash:network-confg
+</pre></table></code></div></div><p>…and confirm that R1 is able to copy the file from the management switch!</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+</pre><td class="rouge-code"><pre>BASE-CONFIG#copy tftp://192.168.0.1/network-confg flash:test
+Destination filename [test]?
+Accessing tftp://192.168.0.1/network-confg...
+Loading network-confg from 192.168.0.1 (via FastEthernet0/1): !
+[OK - 3134 bytes]
+
+3134 bytes copied in 0.543 secs (5772 bytes/sec)
+</pre></table></code></div></div><p>Now let’s confirm that AutoInstall is functioning by resetting R1 to factory defaults. After we reload R1, it should automatically pull the base configuration from our management switch:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre><td class="rouge-code"><pre>BASE-CONFIG#write erase
+Erasing the nvram filesystem will remove all configuration files! Continue? [confirm]
+
+[OK]
+Erase of nvram: complete
+*Jul 24 22:42:26.040: %SYS-7-NV_BLOCK_INIT: Initialized the geometry of nvram
+BASE-CONFIG#
+BASE-CONFIG#
+BASE-CONFIG#reload
+
+System configuration has been modified. Save? [yes/no]: no
+Proceed with reload? [confirm]
+
+*Jul 24 22:42:32.377: %SYS-5-RELOAD: Reload requested by console. Reload Reason: Reload Command.
+
+&lt;snip&gt;
+
+--- System Configuration Dialog ---
+
+Would you like to enter the initial configuration dialog? [yes/no]:
+Loading network-confg from 192.168.0.1 (via FastEthernet0/1): !
+[OK - 1101 bytes]
+
+%Error opening tftp://192.168.0.1/BASE-CONFIG-confg (Socket error)
+%Error opening tftp://192.168.0.1/BASE-CONFIG-confg (Socket error)
+%Error opening tftp://192.168.0.1/BASE-CONFIG-confg (Socket error)
+%Error opening tftp://255.255.255.255/BASE-CONFIG-confg (Socket error)
+%Error opening tftp://255.255.255.255/BASE-CONFIG-confg (Socket error)
+%Error opening tftp://255.255.255.255/BASE-CONFIG-confg (Socket error)
+
+Would you like to enter the initial configuration dialog? [yes/no]: no
+
+Press RETURN to get started!
+BASE-CONFIG&gt;
+BASE-CONFIG&gt;
+</pre></table></code></div></div><p>Success! However, we still have room for improvement; in its current shape, AutoInstall will result in all of our pod devices having the same hostname, and IP addresses will be assigned randomly. This will make remote management a bit more difficult, as we’ll need to find out which IP address each of our devices grabbed before being able to telnet into them. Let’s customize our configuration on R1 a little bit more by creating a file named <code class="language-plaintext highlighter-rouge">R1-confg</code> on the management switch using TCL:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>Management(tcl)#puts [ open "flash:R1-confg" w+ ] {
++&gt;interface FastEthernet0/1
++&gt; ip address 192.168.0.10 255.255.255.0
++&gt; no shutdown
++&gt;line vty 0 15
++&gt; login local
++&gt; transport input all
++&gt;username cisco password cisco
++&gt;enable secret cisco
++&gt;hostname R1
++&gt;}
+Management(tcl)#tclquit
+Management#
+</pre></table></code></div></div><p>Next, let’s configure our TFTP server to serve the <code class="language-plaintext highlighter-rouge">R1-confg</code> file:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre><td class="rouge-code"><pre>Management#tftp-server flash:R1-confg
+</pre></table></code></div></div><p>The naming scheme of this configuration file (along with all of your future, device-specific configuration files) is important. Cisco AutoInstall follows the naming scheme <code class="language-plaintext highlighter-rouge">hostname-confg</code> or <code class="language-plaintext highlighter-rouge">hostname.cfg</code>, where hostname is the hostname that you choose to give to your device. Therefore, if you want a device named “AggSw” to install a host-specific configuration automatically, you need to name that configuration file <code class="language-plaintext highlighter-rouge">AggSw-confg</code> on your TFTP server.</p><p>However, we must first answer an important question: how does our DHCP/TFTP server know which host-specific configuration goes with which device?</p><p>The answer is through configuring manual bindings in a DHCP pool for each individual host. In order to do this, we need to find the client identifier for each host. The easiest way to do this is to allow each device to load its base configuration from the management switch (which involves grabbing an IP address from the DHCP server), then use the <code class="language-plaintext highlighter-rouge">show ip dhcp binding</code> command to find the client identifier, as shown highlighted below in bold:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+</pre><td class="rouge-code"><pre>Management#show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address Client-ID/ Lease expiration Type State Interface
+ Hardware address/
+ User name
+192.168.0.10 0063.6973.636f.2d30. Infinite Manual Active Unknown
+ 3031.352e.3262.6433.
+ 2e35.6166.372d.4661.
+ 302f.31
+192.168.0.11 0063.6973.636f.2d66. Infinite Manual Active Unknown
+ 3836.362e.6632.3262.
+ 2e32.6463.302d.566c.
+ 31
+</pre></table></code></div></div><p>Once you’ve found the client-identifier for your device, you can set up a DHCP pool for that specific device. <strong>When configuring manual bindings for devices, each device requires its own specific DHCP pool</strong>. This is demonstrated below:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre><td class="rouge-code"><pre>Management#show run ip dhcp pool
+!
+ip dhcp pool R1
+ host 192.168.0.10 255.255.255.0
+ client-identifier 0063.6973.636f.2d30.3031.352e.3262.6433.2e35.6166.372d.4661.302f.31
+ bootfile R1-confg
+ default-router 192.168.0.1
+ option 150 ip 192.168.0.1
+!
+ip dhcp pool S1
+ host 192.168.0.11 255.255.255.0
+ client-identifier 0063.6973.636f.2d66.3836.362e.6632.3262.2e32.6463.302d.566c.31
+ bootfile S1-confg
+ default-router 192.168.0.1
+ option 150 ip 192.168.0.1
+</pre></table></code></div></div><p>Each pool identifies:</p><ol><li>The IP address that the host should have<li>The client identifier that belongs to the host<li>The configuration file that should be served to the host<li>The host’s default gateway (typically the IP address of the management switch)<li>The IP address of the TFTP server, so that the client knows from which TFTP server to pull the configured bootfile from.</ol><p>Now that we have our configuration in place, let’s factory reset R1 and see if it pulls a configuration!</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+</pre><td class="rouge-code"><pre>BASE-CONFIG#wr er
+Erasing the nvram filesystem will remove all configuration files! Continue? [confirm]
+[OK]
+Erase of nvram: complete
+BASE-CONFIG#reload
+
+System configuration has been modified. Save? [yes/no]: no
+Proceed with reload? [confirm]
+
+Jan 2 12:48:59.227: %SYS-5-RELOAD: Reload requested by console. Reload Reason: Reload Command.
+
+&lt;snip&gt;
+
+Cisco 1841 (revision 5.0) with 237568K/24576K bytes of memory.
+Processor board ID FTX0937Y0JV
+2 FastEthernet interfaces
+DRAM configuration is 64 bits wide with parity disabled.
+191K bytes of NVRAM.
+254464K bytes of ATA CompactFlash (Read/Write)
+
+Loading R1-confg from 192.168.0.1 (via FastEthernet0/1): !
+[OK - 191 bytes]
+
+
+%Error opening tftp://255.255.255.255/network-confg (Timed out)
+%Error opening tftp://255.255.255.255/cisconet.cfg (Timed out)
+
+--- System Configuration Dialog ---
+
+Would you like to enter the initial configuration dialog? [yes/no]:
+</pre></table></code></div></div><p>As you can see below, we are able to ping 192.168.0.10 (which was statically assigned to Fa0/1 of R1), as well as telnet into 192.168.0.10 successfully!</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+</pre><td class="rouge-code"><pre>Management#ping 192.168.0.10
+ Type escape sequence to abort.
+ Sending 5, 100-byte ICMP Echos to 192.168.0.10, timeout is 2 seconds:
+ !!!!!
+ Success rate is 100 percent (5/5), round-trip min/avg/max = 1/4/9 ms
+
+Management#telnet 192.168.0.10
+Trying 192.168.0.10 ... Open
+
+User Access Verification
+
+Username: cisco
+Password:
+R1&gt;enable
+Password:
+R1#show ip int br | i up
+FastEthernet0/1 192.168.0.10 YES DHCP up up
+</pre></table></code></div></div><h2 id="conclusion">Conclusion</h2><p>We are now able to create a custom configuration for each of the devices in our networking homelab, and we have confirmed that we are able to remotely configure a device, reset it to factory settings when we’re done with our lab for the day, and connect to it remotely once more after the factory-reset process is complete. This is demonstrated below, where I was able to telnet into a Cisco1841 router, factory reset and reload the device, then remotely access it once more after about 2.5 minutes:</p><div class="language-plaintext highlighter-rouge"><div class="code-header"> <span text-data=" Plaintext "><i class="fa-fw fas fa-code small"></i></span> <button aria-label="copy" title-succeed="Copied!"><i class="far fa-clipboard"></i></button></div><div class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+</pre><td class="rouge-code"><pre>Management#telnet 192.168.0.10
+Trying 192.168.0.10 ... Open
+
+
+
+User Access Verification
+
+Username: cisco
+Password:
+R1&gt;enable
+Password:
+R1#wr er
+Erasing the nvram filesystem will remove all configuration files! Continue? [confirm]
+[OK]
+Erase of nvram: complete
+R1#reload
+
+System configuration has been modified. Save? [yes/no]: no
+Proceed with reload? [confirm]
+
+[Connection to 192.168.0.10 closed by foreign host]
+Management#
+Mar 30 15:12:29.904: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+Mar 30 15:12:31.909: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Mar 30 15:13:47.692: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+Mar 30 15:13:48.690: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to down
+Mar 30 15:13:50.813: %LINK-3-UPDOWN: Interface GigabitEthernet0/1, changed state to up
+Mar 30 15:13:51.819: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Mar 30 15:13:59.772: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to down
+Mar 30 15:14:01.802: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up
+Management#telnet 192.168.0.10
+Trying 192.168.0.10 ... Open
+
+
+
+User Access Verification
+
+Username: cisco
+Password:
+R1&gt;enable
+Password:
+R1#show inventory
+NAME: "chassis", DESCR: "1841 chassis"
+PID: CISCO1841 , VID: V01 , SN: FTX0937Y0JV
+
+NAME: "motherboard", DESCR: "C1841 Motherboard with 2 Fast Ethernet"
+PID: CISCO1841 , VID: V01 , SN: FOC09330G2K
+</pre></table></code></div></div><p>The possibilities in the homelab are endless with automation leveraged by Cisco AutoInstall. I hope this guide was helpful!</p></div><div class="post-tail-wrapper text-muted"><div class="post-tail-bottom d-flex justify-content-between align-items-center mt-3 pt-5 pb-2"><div class="license-wrapper"> This post is licensed under <a href="https://creativecommons.org/licenses/by/4.0/"> CC BY 4.0 </a> by the author.</div><div class="share-wrapper"> <span class="share-label text-muted mr-1">Share</span> <span class="share-icons"> <a href="https://twitter.com/intent/tweet?text=Automating Base Configuration in a Cisco Networking Homelab - Christopher Hart&url=https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/" data-toggle="tooltip" data-placement="top" title="Twitter" target="_blank" rel="noopener" aria-label="Twitter"> <i class="fa-fw fab fa-twitter"></i> </a> <a href="https://www.facebook.com/sharer/sharer.php?title=Automating Base Configuration in a Cisco Networking Homelab - Christopher Hart&u=https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/" data-toggle="tooltip" data-placement="top" title="Facebook" target="_blank" rel="noopener" aria-label="Facebook"> <i class="fa-fw fab fa-facebook-square"></i> </a> <a href="https://telegram.me/share?text=Automating Base Configuration in a Cisco Networking Homelab - Christopher Hart&url=https://www.chrisjhart.com/Automating-Base-Configuration-In-A-Cisco-Networking-Homelab/" data-toggle="tooltip" data-placement="top" title="Telegram" target="_blank" rel="noopener" aria-label="Telegram"> <i class="fa-fw fab fa-telegram"></i> </a> <i id="copy-link" class="fa-fw fas fa-link small" data-toggle="tooltip" data-placement="top" title="Copy link" title-succeed="Link copied successfully!"> </i> </span></div></div></div></div></div><div id="panel-wrapper" class="col-xl-3 pl-2 text-muted topbar-down"><div class="access"><div id="access-lastmod" class="post"> <span>Recent Update</span><ul class="post-content pl-0 pb-1 ml-1 mt-2"><li><a href="/Windows-10-ssh-copy-id/">Windows 10 OpenSSH Equivalent of ssh-copy-id</a></ul></div></div><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@1.0.1/dist/bootstrap-toc.min.js"></script><div id="toc-wrapper" class="pl-0 pr-4 mb-5"> <span class="pl-3 pt-2 mb-2">Contents</span><nav id="toc" data-toggle="toc"></nav></div></div></div><div class="row"><div class="col-12 col-lg-11 col-xl-8"><div id="post-extend-wrapper" class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-md-4 pr-md-4"><div id="related-posts" class="mt-5 mb-2 mb-sm-4"><h3 class="pt-2 mt-1 mb-4 ml-1" data-toc-skip>Further Reading</h3><div class="card-deck mb-4"><div class="card"> <a href="/How-Data-Plane-Traffic-Can-Become-Control-Plane-Traffic/"><div class="card-body"> <span class="timeago small" >Nov 21<i class="unloaded">2021-11-21T00:00:00-05:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>ICMP Redirects - How Data Plane Traffic Can Become Control Plane Traffic</h3><div class="text-muted small"><p> Note: If you are not familiar with the concepts of the data plane and control plane on network devices, I highly recommend reviewing my Understanding the Data, Control, and Management Planes of ...</p></div></div></a></div><div class="card"> <a href="/Understanding-Control-Plane-Packet-Loss-due-to-CoPP/"><div class="card-body"> <span class="timeago small" >Nov 13<i class="unloaded">2021-11-13T00:00:00-05:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Understanding Control Plane Packet Loss due to CoPP</h3><div class="text-muted small"><p> Note: If you are not familiar with the concepts of the data plane and control plane on network devices, I highly recommend reviewing my Understanding the Data, Control, and Management Planes of ...</p></div></div></a></div><div class="card"> <a href="/Understanding-Data-Control-Management-Planes/"><div class="card-body"> <span class="timeago small" >Nov 12<i class="unloaded">2021-11-12T00:00:00-05:00</i> </span><h3 class="pt-0 mt-1 mb-3" data-toc-skip>Understanding the Data, Control, and Management Planes of Network Devices</h3><div class="text-muted small"><p> While troubleshooting connectivity issues and packet loss in computer networks, network engineers often misunderstand the difference between the data plane and control plane. This can lead to fault...</p></div></div></a></div></div></div><div class="post-navigation d-flex justify-content-between"> <a href="/Configuring-SuperPuTTY-To-Open-Telnet-Hyperlinks/" class="btn btn-outline-primary" prompt="Older"><p>Configuring SuperPuTTY to open web browser telnet hyperlinks</p></a> <a href="/Cisco-TCL-Script-Not-Running-Configure-Replace/" class="btn btn-outline-primary" prompt="Newer"><p>Cisco TCL Script Not Running Configure Replace</p></a></div></div></div></div><footer class="d-flex w-100 justify-content-center"><div class="d-flex justify-content-between align-items-center"><div class="footer-left"><p class="mb-0"> © 2021 <a href="https://twitter.com/_ChrisJHart">Christopher Hart</a>. <span data-toggle="tooltip" data-placement="top" title="Except where otherwise noted, the blog posts on this site are licensed under the Creative Commons Attribution 4.0 International (CC BY 4.0) License by the author.">Some rights reserved.</span></p></div><div class="footer-right"><p class="mb-0"> Powered by <a href="https://jekyllrb.com" target="_blank" rel="noopener">Jekyll</a> with <a href="https://github.com/cotes2020/jekyll-theme-chirpy" target="_blank" rel="noopener">Chirpy</a> theme.</p></div></div></footer></div><div id="search-result-wrapper" class="d-flex justify-content-center unloaded"><div class="col-12 col-sm-11 post-content"><div id="search-hints"><h4 class="text-muted mb-4">Trending Tags</h4></div><div id="search-results" class="d-flex flex-wrap justify-content-center text-muted mt-3"></div></div></div></div><div id="mask"></div><a id="back-to-top" href="#" aria-label="back-to-top" class="btn btn-lg btn-box-shadow" role="button"> <i class="fas fa-angle-up"></i> </a> <script src="https://cdn.jsdelivr.net/npm/simple-jekyll-search@1.10.0/dest/simple-jekyll-search.min.js"></script> <script> SimpleJekyllSearch({ searchInput: document.getElementById('search-input'), resultsContainer: document.getElementById('search-results'), json: '/assets/js/data/search.json', searchResultTemplate: '<div class="pl-1 pr-1 pl-sm-2 pr-sm-2 pl-lg-4 pr-lg-4 pl-xl-0 pr-xl-0"> <a href="{url}">{title}</a><div class="post-meta d-flex flex-column flex-sm-row text-muted mt-1 mb-1"> {categories} {tags}</div><p>{snippet}</p></div>', noResultsText: '<p class="mt-5">Oops! No result founds.</p>', templateMiddleware: function(prop, value, template) { if (prop === 'categories') { if (value === '') { return `${value}`; } else { return `<div class="mr-sm-4"><i class="far fa-folder fa-fw"></i>${value}</div>`; } } if (prop === 'tags') { if (value === '') { return `${value}`; } else { return `<div><i class="fa fa-tag fa-fw"></i>${value}</div>`; } } } }); </script> <script src="https://cdn.jsdelivr.net/combine/npm/lozad/dist/lozad.min.js,npm/magnific-popup@1/dist/jquery.magnific-popup.min.js,npm/clipboard@2/dist/clipboard.min.js"></script> <script defer src="/assets/js/dist/post.min.js"></script> <script src="https://cdn.jsdelivr.net/combine/npm/popper.js@1.16.1,npm/bootstrap@4/dist/js/bootstrap.min.js"></script> <script defer src="/app.js"></script>

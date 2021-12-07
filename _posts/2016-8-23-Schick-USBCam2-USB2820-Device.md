@@ -1,0 +1,14 @@
+---
+layout: post
+title: Schick Technologies USBCam2 Intraoral Camera Appears In Device Manager As USB2820 Device
+---
+
+I’ve encountered an issue recently with a Schick Technologies USBCam2 intraoral camera appearing as a USB2820 device in Device Manager when plugged into a Dell Vostro 1520 laptop. I am not sure at this time if this is an issue between this particular laptop and the intraoral camera, or if this issue can occur with other laptop models as well. For me, this issue occurred regardless of which USB port the camera was plugged into. When the camera is acting under the USB2820 device, it does not display any video within dental practice management software or image capturing software (in this case, I was working with Eaglesoft.)
+
+I resolved this issue by changing how Windows searches for new device drivers. This can be done by searching for “View advanced system settings” in the Start menu, switching to the “Hardware” tab, then clicking on “Device Installation Settings”. In the window that appears, select the radio button for “No, let me choose what to do”, then select the radio button for either “Install driver software from Windows Update if it is not found on my computer” or “Never install driver software from Windows Update.” Then, click “Save Changes” and exit out of all dialog boxes. In my case, I needed to select the latter option to resolve the issue permanently, but your mileage may vary.
+
+Next, open up “Device Manager” by searching for it in the Start menu. The USB2820 device should be located under the “Sound, video and game controllers” submenu. Right-click on the USB2820 device, select “Uninstall”, then check the radio button for “Delete driver software” if it gives you the option to do so. Next, click the icon towards the top of the Device Manager window that says “Scan for hardware changes,” The Schick Technologies USBCam2 device should appear soon afterwards in the “Imaging devices” submenu. If you’re having trouble locating the “Scan for hardware changes” icon, you can also unplug the intraoral camera, then plug it back into the same USB port.
+
+If you plug the intraoral camera into a different USB port than previously, you may find that the USB2820 device will reappear. Repeating the process appears to resolve the issue for that specific USB port. Because of this, you may have to repeat this process for each USB port you plug the camera into – in my case, I had to do it four times, once for each USB port on the laptop.
+
+I’m not entirely sure what the root cause of this issue is, and am still searching for answers. If anybody has a better fix or an explanation for the cause, I would be happy to hear it!

@@ -23,7 +23,7 @@ switch# show running-config | count
 switch# 
 ```
 
-First, I decided to benchmark how long a "normal" `copy running-config startup-config` by running the `show clock` command before and after saving configuration. I chained all three commands together to eliminate any human response times from the equation.
+First, I decided to benchmark how long a "normal" `copy running-config startup-config` takes by running the `show clock` command before and after saving configuration. I chained all three commands together to eliminate any human response times from the equation.
 
 ```
 switch# show clock ; copy running-config startup-config ; show clock
@@ -75,7 +75,7 @@ Q
 N9K# 
 ```
 
-Coincidentally, they also had the CLI aliases shown here configured.
+Coincidentally, they also had the CLI aliases shown here configured. Specifically, the `q` alias (probably short for "quit") caught my eye.
 
 ```
 N9K# show running-config | section alias

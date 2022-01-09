@@ -7,14 +7,11 @@ title: Static Route with Same Administrative Distance as Dynamic Routing Protoco
 
 In the [Discord server](https://discord.com/invite/4Y9g9yzyBq) operated by [sysengineer](https://beacons.ai/sysengineer), the community has a Discord bot maintained by [Terranova Tech](https://www.youtube.com/channel/UC_bfWv6YbWJOdvnu_pbmvNw) that quizzes people studying for their CCNA and CCNP certifications. The bot asked the following CCNA-level question:
 
-```
-Which parameter can be tuned to affect the selection of a static route as a backup, when a dynamic protocol is also being used?
-
-A. hop count
-B. link bandwidth
-C. link delay
-D. link cost
-```
+> Which parameter can be tuned to affect the selection of a static route as a backup, when a dynamic protocol is also being used?  
+A. hop count  
+B. link bandwidth  
+C. link delay  
+D. link cost  
 
 The bot reported that the correct answer choice is `D. link cost`. A user in the Discord server pointed out that the correct answer is not correct because the question appears to be describing a floating static route. By definition, a floating static route for a prefix has a higher Administrative Distance than a dynamic routing protocol with the same prefix installed in the unicast routing table. The cost of a link may affect the dynamic routing protocol's metric for the path to the prefix, but it will not affect the Administrative Distance.
 

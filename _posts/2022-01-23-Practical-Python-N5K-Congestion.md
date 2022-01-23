@@ -40,7 +40,7 @@ An interface becomes congested when the total sum of traffic that needs to be tr
 
 Let's also say that 7.5Gbps of traffic ingresses the switch through Ethernet1/1, and 7.5Gbps of traffic ingresses the switch through Ethernet1/2.
 
-![]({{ site.baseurl }}/images/2022/practical-python-n5k-congestion/switch_ingress_traffic.png)
+![]({{ site.baseurl }}/images/2022/practical-python-n5k-congestion/switch_traffic_ingress.png)
 
 All of this traffic needs to egress Ethernet1/3. This means a combined sum of 15Gbps of traffic needs to egress Ethernet1/3. However, Ethernet1/3 is a 10Gbps interface; it's only capable of transmitting up to 10Gbps of traffic at a time. Therefore, the excess 5Gbps of traffic *must* be buffered by the switch. This traffic will be buffered at the ingress interfaces (Ethernet1/1 and Ethernet1/2) within a virtual queue that represents Ethernet1/3.
 

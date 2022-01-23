@@ -106,7 +106,7 @@ This table has three columns we should pay attention to - "name", "car", and "ma
 
 The ASIC registers displayed by the `show hardware internal carmel asic <x> registers match .*STA.*frh.*` command indicates that memory address 5 of ASIC 0 contained data when the command was executed. The table displayed by the `show hardware internal carmel all-ports` command translates this to internal interface xgb1/5, the numbering of which means that interface Ethernet1/5 contained data when the command was executed.
 
-When network congestion is constantly occuring (meaning, input discards are constantly incrementing on one or more interfaces), you can execute these commands rapidly and get a very good idea as to which interface is your congested interface. However, these commands are not very useful when network congestion is intermittent and strikes over a small period of time. Most organizations cannot expect an employee to monitor interfaces for incrementing input discards over several hours *and* parse the collected data without error.
+When network congestion is constantly occurring (meaning, input discards are constantly incrementing on one or more interfaces), you can execute these commands rapidly and get a very good idea as to which interface is your congested interface. However, these commands are not very useful when network congestion is intermittent and strikes over a small period of time. Most organizations cannot expect an employee to monitor interfaces for incrementing input discards over several hours *and* parse the collected data without error.
 
 Thankfully, this is a perfectly reasonable expectation for a Python script!
 

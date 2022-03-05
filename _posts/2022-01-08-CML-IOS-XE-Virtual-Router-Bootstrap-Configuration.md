@@ -19,7 +19,7 @@ vrf definition management
  exit-address-family
 ip domain lookup vrf management source-interface GigabitEthernet1
 ip domain name vrf management chrisjhart.net
-ntp server 192.168.10.1 vrf management
+ntp server vrf management 192.168.10.1
 crypto key generate rsa modulus 2048 label RSA_SSH
 interface Gi1
  no shutdown

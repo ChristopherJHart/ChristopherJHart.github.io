@@ -19,6 +19,7 @@ vrf definition management
  exit-address-family
 ip domain lookup vrf management source-interface GigabitEthernet1
 ip domain name vrf management chrisjhart.net
+ntp server 192.168.10.1 vrf management
 crypto key generate rsa modulus 2048 label RSA_SSH
 interface Gi1
  no shutdown
@@ -78,6 +79,7 @@ This bootstrap configuration has the following key features:
 * In my lab topologies, interface GigabitEthernet1 always connects to an "Unmanaged Switch" node provided by CML. This switch node then connects to an External Connector node configured in Bridge mode. GigabitEthernet1 pulls an IP address via DHCP from my home router, which we can use to SSH directly into the virtual router for further configuration.
 * A user account with my name is automatically created, alongside a password (which is rarely used - see the next bullet point for details).
 * The public RSA key of two hosts I often use to SSH into virtual routers is imported into the configuration. This way, I can SSH into the virtual router without needing to enter a password. Passwords annoy me! :)
+* An NTP server present in my network is automatically configured on each device, ensuring clocks are synchronized between all devices.
 
 ## Tested Virtual Routers
 

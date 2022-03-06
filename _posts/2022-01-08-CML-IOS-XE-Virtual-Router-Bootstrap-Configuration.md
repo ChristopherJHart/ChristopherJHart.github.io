@@ -85,6 +85,8 @@ This bootstrap configuration has the following key features:
 * A user account with my name is automatically created, alongside a password (which is rarely used - see the next bullet point for details).
 * The public RSA key of two hosts I often use to SSH into virtual routers is imported into the configuration. This way, I can SSH into the virtual router without needing to enter a password. Passwords annoy me! :)
 * An NTP server present in my network is automatically configured on each device, ensuring clocks are synchronized between all devices.
+* Automatically enables CDP (which is disabled by default on CSR1000v and Catalyst 8000v routers).
+* Enables an SCP server on the router, allowing for easy transferring of files into the lab environment.
 
 ## Tested Virtual Routers
 

@@ -10,9 +10,13 @@ This is the Cisco IOS-XE configuration I use to bootstrap CSR1000v and Catalyst 
 ```
 hostname R1
 no ip domain lookup vrf default
+aaa new-model
+aaa authentication login default local-case
+aaa authorization exec default local
 username christopher privilege 15 password cisco!123
 service timestamps debug datetime msec year
 service timestamps log datetime msec year
+cdp run
 vrf definition management
  !
  address-family ipv4
@@ -39,6 +43,7 @@ ip ssh pubkey-chain
    YcePIFwUaZXpcmRgObiTexztQxUOe0cQgLk1oPDnsudA5gkTQQpaGZCyS3uO6MUlT6HY/yEZPvqJa72nHdFBGoVad+F2Z22qe8Bj6cb0IYL8X+9FgnmhGrLKzbGF3cZzvSTE3DS/aE73Ue2DygVtjjMOUg1nVqz0hIHonND8PomN11pYVrIMeTXIb0
    YSsDveopeu/y8vUYlWcwaIpaNZhV5/4squv+KS6GzWUbQAqSwqJekvYfFOgk+Vj8wbZuZgDz5epb5uAqyH8CHmNd105iYf1ZzJ0obt2L84/vGzt3XizGEQ/4dKHMIG1MXKZkdQeWhpPv5d4A1lKblvQw0LT/dMFvm4kghowu9Fs=
    exit
+ip scp server enable
 line con 0
  exec-timeout 0 0
  privilege level 15

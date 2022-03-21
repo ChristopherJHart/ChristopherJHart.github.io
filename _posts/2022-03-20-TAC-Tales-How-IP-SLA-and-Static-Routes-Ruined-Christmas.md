@@ -295,7 +295,7 @@ In the customer's environment, this outage persisted for about 23 minutes. Their
 
 Root Cause Analysis (RCA) is like constructing a jigsaw puzzle, where you piece together small pictures until they form one large image. Sometimes when constructing a jigsaw puzzle, it seems like you're missing pieces, and it's difficult to factually say what the big picture is.
 
-Similarly, sometimes when performing RCA, you do not have all of the information needed to declaratively identify the root cause of an issue. However, the facts you *do* have let you "invent" a fact, assume its is true, and see if it "fits" in the puzzle you're working with.
+Similarly, sometimes when performing RCA, you do not have all of the information needed to declaratively identify the root cause of an issue. However, the facts you *do* have let you "invent" a fact, assume it is true, and see if it "fits" in the puzzle you're working with.
 
 In this scenario, let's assume that the link between R2 and R3 becomes unidirectional. Specifically, traffic sent by R2 to R3 is received by R3 successfully, but traffic sent by R3 to R2 is not received by R2 successfully.
 

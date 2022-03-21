@@ -132,7 +132,7 @@ R1's static route towards R2 is unnecessary, as the iBGP peering with R2 ensures
 
 ## Log Analysis
 
-Since the issue was not presently happened, I collected logs from relevant devices for analysis. I found that just before the start of the outage, R2's track object 2 transitioned from Up to Down because R2's IP SLA 2's reachability to R3 went down.
+Since the issue was not presently happening, I collected logs from relevant devices for analysis. I found that just before the start of the outage, R2's track object 2 transitioned from Up to Down because R2's IP SLA 2's reachability to R3 went down.
 
 ```
 R2#show logging

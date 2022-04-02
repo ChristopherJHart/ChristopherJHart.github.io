@@ -9,7 +9,7 @@ Ideally, we should have three goals when creating and maintaining a blog:
 
 1. **No/Low-Cost** - Free or as close to free as possible.
 2. **Productive** - Easy to write in and easy to maintain.
-3. **Cloud Natuve** - Utilizes public cloud services for hosting, allowing for infinite scaling.
+3. **Cloud Native** - Utilizes public cloud services for hosting, allowing for infinite scaling.
 
 We can use the following technologies to accomplish these goals:
 

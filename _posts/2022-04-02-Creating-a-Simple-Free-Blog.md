@@ -3,7 +3,7 @@ layout: post
 title: How to Create a Simple, Free Blog
 ---
 
-Authoring technical content is a skill, and like any skill, the only way to improve it is to practice. An easy way to author and share technical content is to create a blog and share your technology experience with others on the Internet. A common misconception is that creating your own website or blog requires technical expertise (such as experience with databases, web servers, a content management system like WordPress, or virtual machines) and financial investment (renting a virtual machine from a public cloud provider or hosting your own within your homelab).
+Authoring technical content is a skill. Like any skill, the only way to improve it is to practice. An easy way to author and share technical content is to create a blog and share your technology experience with others on the Internet. A common misconception is that creating your own website or blog requires technical expertise (such as experience with databases, web servers, a content management system like WordPress, or virtual machines) and financial investment (renting a virtual machine from a public cloud provider or hosting your own within your homelab).
 
 Ideally, we should have three goals when creating and maintaining a blog:
 

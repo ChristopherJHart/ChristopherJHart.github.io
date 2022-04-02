@@ -190,4 +190,4 @@ GitHub will detect that changes have occurred in the master branch. GitHub will 
 
 ## Conclusion
 
-Using a static site generator such as Jekyll alongside a free hosting service like GitHub Pages lets you quickly author and share technical content in a blog format.
+Using a static site generator such as Jekyll alongside a free hosting service like GitHub Pages lets you quickly author and share technical content in a blog format. Creating content in Markdown is highly productive, as you can maximize the amount of time *creating* content compared to the amount of time worrying about the *presentation* of the content. Most importantly, this solution is ***completely free***, which means it is highly accessible to all content creators across the globe!

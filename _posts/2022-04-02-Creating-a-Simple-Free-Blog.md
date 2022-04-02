@@ -162,7 +162,7 @@ The easiest way to make your first post is to edit this one. Go into /_posts/ an
 
 In Jekyll, all posts start with some metadata at the top of the file containing information about the file. This metadata is surrounded by three dashes (`---`). In this case, two options are defined - `layout`, which defines this file as a blog post, and `title`, which defines the title of this blog post.
 
-After this metadata, the post itself is written in Markdown. The only key difference worth calling out is the use of `\{\{ site.baseurl \}\}` when hyperlinking to other posts or displaying images.
+After this metadata, the post itself is written in Markdown. The only key difference worth calling out is the use of the `site.baseurl` variable enclosed by two pairs of angle brackets (`{` and `}`) when hyperlinking to other posts or displaying images. This ensures that the content you are referencing is relative to the website's base URL, which gives you flexibility in your website's URL and reduces the amount of work you need to do if your website's URL changes in the future.
 
 Now that we understand the format of a post, let's create a new blog post. Navigate back to the `_posts` directory.
 

@@ -22,7 +22,7 @@ In this article, we will illustrate how and why this behavior happens by focusin
 
 First, let's review the topology we will use in this article.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/topology.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/topology.jpg)
 
 This topology involves two devices - a Catalyst 8000v virtual router named "Router" running IOS-XE 17.08.01a, and a Linux host named "Host" running the Ubuntu 20.04 operating system. Router's GigabitEthernet2 interface with an IP address of 192.0.2.1/24 is directly connected to Host's eth1 interface with an IP address of 192.0.2.10/24.
 
@@ -30,15 +30,15 @@ This topology involves two devices - a Catalyst 8000v virtual router named "Rout
 
 Let's walk through precisely what happens when the `ping 192.0.2.10` command is executed. First, the management plane sends a message through InterProcess Communication (IPC) to a software process of the network operating system responsible for handling the Internet Control Message Protocol (ICMP) for the device. We will refer to this software process as the "ICMP Process". This IPC message informs the ICMP-related sofware process that the user would like to send ICMP Echo Request packets to a specific IPv4 address.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/management_plane_informs_icmp_process.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/management_plane_informs_icmp_process.jpg)
 
 The ICMP-related software process will internally craft an ICMP Echo Request header with a starting sequence number. In Cisco IOS-XE, this is typically a sequence number of 0.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/control_plane_crafts_icmp_datagram.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/control_plane_crafts_icmp_datagram.jpg)
 
 This data is typically passed to another software process via an IPC message responsible for crafting IPv4 and Ethernet headers for the packet. We will refer to this software process as the "IP Process".
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/control_plane_icmp_to_ip.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/control_plane_icmp_to_ip.jpg)
 
 While crafting the IPv4 and Ethernet headers, the router references its routing table for the destination IP address 192.0.2.10. In our scenario, the longest prefix match for this IP address is the 192.0.2.0/24 route directly connected to interface GigabitEthernet2.
 
@@ -86,7 +86,7 @@ root@Host:/# ip link show eth1
 
 To summarize, the router knows the host's IP address, but does not know the host's MAC address. The router needs to *resolve* the host's MAC address using the host's IP address.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/control_plane_ip_crafts_headers.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/control_plane_ip_crafts_headers.jpg)
 
 The router will do this using the Address Resolution Protocol (ARP). The router will consult its ARP cache, looking for an existing entry for 192.0.2.10. The output of the `show ip arp 192.0.2.10` command below is empty, suggesting that no such entry exists. This is confirmed with the full output of the `show ip arp` command.
 
@@ -102,17 +102,17 @@ Internet  192.0.2.1               -   5254.00dd.7c01  ARPA   GigabitEthernet2
 
 The router cannot proceed with sending this ICMP Echo Request packet without first resolving the MAC address associated with the host assigned 192.0.2.10. Therefore, the IP Process will erase the ICMP packet from memory.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/control_plane_ip_erases_icmp_packet.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/control_plane_ip_erases_icmp_packet.jpg)
 
 > **Note**: The reasoning behind *why* this ICMP Echo Request packet is erased from memory is explained in the ["Why Is The First Packet Dropped?"](#why-is-the-first-packet-dropped) section of this article.
 
 To populate the ARP cache with a valid entry, the router will broadcast an ARP Request frame to all hosts on the 192.0.2.0/24 subnet asking for the host assigned the 192.0.2.10 IP address to respond with the host's MAC address.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/router_arp_request.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/router_arp_request.jpg)
 
 The host will respond with a unicast ARP Reply frame informing the router that the host's MAC address is aac1.abd2.5c3f.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/host_arp_reply.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/host_arp_reply.jpg)
 
 This procedure is demonstrated through the packet capture on the host below.
 
@@ -133,7 +133,7 @@ Internet  192.0.2.10              1   aac1.abd2.5c3f  ARPA   GigabitEthernet2
 
 Recall that the original ICMP Echo Request packet was erased from memory by the IP Process. The ICMP Process has no knowledge of whether the ICMP packet it crafted and sent to the IP Processs was successfully sent out of the router by the IP Process, or if the ICMP packet was deleted in memory. The ICMP Process simply expects to receive an ICMP Echo Reply packet in response to the ICMP Echo Request packet it created within the defined timeout period (default 2 seconds in Cisco IOS-XE). When this timeout period expires, the ICMP Process will mark that instance of the ping unsuccessful.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/control_plane_icmp_declares_first_packet_lost.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/control_plane_icmp_declares_first_packet_lost.jpg)
 
 At this brief moment in time, the command line output for the `ping 192.0.2.10` command will look like the following.
 
@@ -150,15 +150,15 @@ The ICMP Process will repeat the above process when the timeout period for the f
 
 Now that the ARP table contains an entry for 192.0.2.10, the IP Process can craft accurate IPv4 and Ethernet headers for the ICMP Echo Request packet.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/control_plane_ip_crafts_headers_second_packet.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/control_plane_ip_crafts_headers_second_packet.jpg)
 
 The IP Process will hand this completed ICMP Echo Request packet off to the data plane for transmission on the wire towards the host.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/router_icmp_echo_request.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/router_icmp_echo_request.jpg)
 
 The host will receive this ICMP Echo Request packet and respond with an ICMP Echo Reply packet.
 
-![]({{ site.baseurl }}/images/2022/illustrating-first-ping-lost/host_icmp_echo_reply.jpg)
+![]({{ site.baseurl }}/images/2022/illustrating-first-icmp-ping-lost/host_icmp_echo_reply.jpg)
 
 The data plane of the router will receive this ICMP Echo Reply packet, recognize that the packet is destined for the router itself, and send the packet to the control plane (this action is commonly called a *punt*). The control plane will route this packet to the ICMP Process. The ICMP Process will report that there is bidirectional connectivity with 192.0.2.10. At this brief moment in time, the command line output for the `ping 192.0.2.10` command will look like the following.
 

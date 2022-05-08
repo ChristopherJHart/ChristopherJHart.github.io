@@ -217,3 +217,14 @@ For this reason, a router dropping a packet instead of buffering it while the ro
 ## Conclusion
 
 In summary, it is expected behavior for most network operating systems to drop the first ICMP packet sent through the `ping` command if a router does not have the MAC address for the destination resolved through ARP. If you re-run the `ping` command immediately after seeing this behavior, you will most likely not see this behavior. This behavior is typically only observed when you are sending traffic to an IP address for the first time (such as if a new host has been recently connected to the network).
+
+It is worth noting that not all network operating systems exhibit this behavior with `ping` commands. This behavior has been seen on the following network operating systems:
+
+* Cisco IOS
+* Cisco IOS-XE
+* Cisco NX-OS
+
+This behavior has not been seen on the following network operating systems:
+
+* Juniper Junos OS
+* MikroTik RouterOS

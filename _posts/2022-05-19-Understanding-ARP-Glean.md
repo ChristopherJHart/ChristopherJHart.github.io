@@ -3,6 +3,8 @@ layout: post
 title: Understanding ARP Glean
 ---
 
+> **Note**: If you are not familiar with the concepts of the data plane and control plane on network devices, I highly recommend reviewing my [Understanding the Data, Control, and Management Planes of Network Devices post]({{ site.baseurl }}/Understanding-Data-Control-Management-Planes/) prior to reading this post.
+
 [In a previous blog post]({{ site.baseurl }}/Illustrating-Why-The-First-ICMP-Ping-Is-Lost/), we investigated one scenario that explains why the first packet of a `ping` command is lost.
 
 ```

@@ -7,7 +7,7 @@ order: 4
 
 ![]({{ site.baseurl }}/images/About-Picture.png)
 
-My name is Christopher Hart, and I am a TAC engineer on the Data Center Routing & Switching team at Cisco’s RTP campus. Before my current role at Cisco, I was an IT consultant serving small businesses in the Raleigh-Durham area. My passion for technology started as a small child, where my obsession with video games and computers evolved into an interest in all things IT.
+My name is Christopher Hart, and I am a Consulting Engineer at Cisco’s RTP campus. Prior to my current role, I was a TAC engineer on the Data Center Routing & Switching team. My passion for technology started as a small child, where my obsession with video games and computers evolved into an interest in all things IT.
 
 I graduated from East Carolina University in 2020 with a Bachelor’s of Science in Industrial Technology with a concentration in Information and Computer Technology. I actively hold a CCNA and DevNet Associate certification, and am a proud member of the DevNet Class of 2020.
 

@@ -2,7 +2,7 @@
 layout: page
 title: About
 permalink: /about/
-order: 4
+order: 1
 ---
 
 ![]({{ site.baseurl }}/images/About-Picture.png)

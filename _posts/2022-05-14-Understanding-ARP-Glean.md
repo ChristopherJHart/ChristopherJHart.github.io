@@ -33,7 +33,7 @@ First, let's review the topology we will use in this article.
 
 This topology involves three devices - two Cisco Catalyst 8000v virtual routers running Cisco IOS-XE 17.08.01a, and a Linux host named "Host" running the Ubuntu 20.04 operating system. The first Catalyst 8000v virtual router is named "R1", and its GigabitEthernet2 interface is assigned IPv4 address 192.0.2.1/30. R1's GigabitEthernet2 interface connects to GigabitEthernet2 of the second Catalyst 8000v virtual router, which is named "R2". R2's GigabitEthernet2 interface is assigned IPv4 address 192.0.2.2/30. R2's GigabitEthernet3 interface is assigned an IPv4 address of 192.0.2.129/25 is directly connected to Host's eth1 interface with an IPv4 address of 192.0.2.130/25.
 
-R1 and R2 are both running the Open Shortest Path First (OSPF) dynamic unicast routing protocol. R1's GigabitEthernet2 interface is activated under R1's OSPF process, while R2's GigabitEthernet2 and GigabitEthernet3 interfaces are activated under R2's OSPF process. As a result, First has an OSPF-learned route for 192.0.2.128/25 in its unicast routing table.
+R1 and R2 are both running the Open Shortest Path First (OSPF) dynamic unicast routing protocol. R1's GigabitEthernet2 interface is activated under R1's OSPF process, while R2's GigabitEthernet2 and GigabitEthernet3 interfaces are activated under R2's OSPF process. As a result, R1 has an OSPF-learned route for 192.0.2.128/25 in its unicast routing table.
 
 ```
 R1#show ip route

@@ -269,7 +269,7 @@ This procedure will repeat three more times, with ICMP Echo Request packets bein
 R1#ping 192.0.2.130
 Type escape sequence to abort.
 Sending 5, 100-byte ICMP Echos to 192.0.2.130, timeout is 2 seconds:
-!!!!!
+.!!!!
 Success rate is 100 percent (5/5), round-trip min/avg/max = 1/6/16 ms
 ```
 

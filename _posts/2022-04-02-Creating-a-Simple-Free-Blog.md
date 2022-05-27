@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How to Create a Simple, Free Blog
+title: How to Create a Simple, Free Blog with Jekyll and GitHub Pages
 ---
 
 Authoring technical content is a skill. Like any skill, the only way to improve it is to practice. An easy way to author and share technical content is to create a blog and share your technology experience with others on the Internet. A common misconception is that creating your own website or blog requires technical expertise (such as experience with databases, web servers, a content management system like WordPress, or virtual machines) and financial investment (renting a virtual machine from a public cloud provider or hosting your own within your homelab).

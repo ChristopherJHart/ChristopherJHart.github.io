@@ -288,7 +288,7 @@ Next, we need to set up the GitHub Pages component of our blog. This will allow 
 
 In the left hand pane, locate and left click on the "Pages" category. An example is below with the "Pages" category highlighted in red.
 
-![]({{ site.baseurl }}/images/2022/creating-hugo-blog/github_repo_pages_settings.png)
+![]({{ site.baseurl }}/images/2022/creating-hugo-blog/github_repo_pages_setting.png)
 
 By default, GitHub Pages will be disabled for this repository. To enable it, we need to select a branch for GitHub Pages to build and serve our website from. In the middle pane under the "Source" section, left click on the "None" dropdown menu. An example is below with the "None" dropdown menu highlighted in red.
 

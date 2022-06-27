@@ -98,7 +98,7 @@ A *patch panel* is a mounted piece of hardware that aggregates and organizes a l
 
 The value of a patch panel is best demonstrated through an example. Imagine an office suite consisting of multiple offices employees work in. Each employee will have one computer and one phone in their office, and both devices need to be connected to the network through twisted pair Ethernet cables. Similarly to how devices need power supplied by electrical wall outlets as shown below, both devices will need network connectivity through Ethernet wall outlets as shown below.
 
-![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/american_power_outlet.jpeg)![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/ethernet_wall_outlet.jpg)
+<img align="left" src="{{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/american_power_outlet.jpeg"><img align="right" src="{{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/ethernet_wall_outlet.jpg">
 
 Electricians (or other certified tradespeople) will install twisted pair Ethernet cables between each office's Ethernet wall outlet and a central location somewhere within the office suite (typically a facilities or telecommunications closet or room) through a [dropped ceiling](https://en.wikipedia.org/wiki/Dropped_ceiling) or crawlspace. One end of each cable will connect to the office's Ethernet wall outlet, and the other end of the cable will be terminated in the back of a patch panel as shown below.
 

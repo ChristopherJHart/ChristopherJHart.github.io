@@ -98,7 +98,7 @@ A *patch panel* is a mounted piece of hardware that aggregates and organizes a l
 
 The value of a patch panel is best demonstrated through an example. Imagine an office suite consisting of multiple offices employees work in. Each employee will have one computer and one phone in their office, and both devices need to be connected to the network through twisted pair Ethernet cables. Similarly to how devices need power supplied by electrical wall outlets as shown below, both devices will need network connectivity through Ethernet wall outlets as shown below.
 
-![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/american_power_outlet.jpeg) ![](./images/2022/ethernet_physical_network_terminology/ethernet_wall_outlet.jpg)
+![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/american_power_outlet.jpeg) ![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/ethernet_wall_outlet.jpg)
 
 Electricians (or other certified tradespeople) will install twisted pair Ethernet cables between each office's Ethernet wall outlet and a central location somewhere within the office suite (typically a facilities or telecommunications closet or room) through a [dropped ceiling](https://en.wikipedia.org/wiki/Dropped_ceiling) or crawlspace. One end of each cable will connect to the office's Ethernet wall outlet, and the other end of the cable will be terminated in the back of a patch panel as shown below.
 
@@ -114,11 +114,11 @@ Each port will then typically connect to a port on a network switch as shown bel
 
 To summarize this example, a patch panel is used to connect a host (e.g. a computer or phone) to a network device (a switch), as shown by the diagram below.
 
-![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/office_patch_panel_diagram.jpeg)
+![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/office_patch_panel_diagram.jpg)
 
 However, patch panels can also be used to connect two network devices together. This is common in data center or lab environments, where a network device in one row of the data center needs to be connected to a network device in a different row of the data center. Furthermore, patch panels are not limited to twisted pair Ethernet cables. Patch panels for fiber-optic cables exist and are in common use in data center environments that need 10Gbps or higher speeds. This type of use case is shown by the diagram below.
 
-![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/data_center_patch_panel_diagram.jpeg)
+![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/data_center_patch_panel_diagram.jpg)
 
 ## Coupler
 
@@ -126,4 +126,4 @@ A *coupler* is a piece of hardware that connects two cables of the same type tog
 
 Two examples of couplers are shown below - one for twisted pair Ethernet cables, and another for fiber optic cables with LC connectors.
 
-![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/copper_coupler.jpeg) ![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/fiber_lc_coupler.jpeg)
+![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/copper_coupler.jpg) ![]({{ site.baseurl }}/images/2022/ethernet_physical_network_terminology/fiber_lc_coupler.jpeg)

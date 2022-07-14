@@ -104,6 +104,8 @@ Receiving objects: 100% (397/397), 913.42 KiB | 9.32 MiB/s, done.
 Resolving deltas: 100% (146/146), done.
 ```
 
+> **Note**: The theme you choose may have additional instructions! Consult the documentation for the theme that you choose to see if any additional steps need to be taken to properly install your theme.
+
 ## Modify Hugo Configuration
 
 Now we need to modify the `config.toml` file within the root of our blog site to personalize the site further. You will most likely want to modify the following fields:
@@ -227,7 +229,7 @@ Lastly, we need to set up a GitHub Actions workflow that will automatically buil
 christopher@ubuntu-playground:~/GitHub/blog-hugo$ mkdir -p .github/workflows
 ```
 
-Then, we will create a new file within this directory named `deploy_gh_pages.yaml` with the following contents.
+Then, we will create a new file within the `.github/workflows` directory named `deploy_gh_pages.yaml` with the following contents.
 
 ```
 ---

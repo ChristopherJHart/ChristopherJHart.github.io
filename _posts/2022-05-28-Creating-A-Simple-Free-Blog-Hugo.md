@@ -120,8 +120,6 @@ The `[params]` key typically defines parameters that the theme will use to rende
 
 * **author**: The name of the author of the blog site. This will typically be your name (either your real name or an online handle).
 * **description**: A brief description of the content of your blog. This will appear underneath the title of your blog (as defined by the `title` field) underneath your avatar.
-* **avatar**: A filepath (relative to the `static` directory of the blog site) to an image (JPEG, PNG, etc.) that will be displayed in the upper left corner of the blog site.
-* **images**: A list of filepaths (relative to the `static` directory of the blog site) for images (JPEG, PNG, etc.) that *can* be displayed on the blog site. The same filepath defined by the `avatar` field must be present in this list.
 
 In the m10c theme, if you want to add links to your social media, you can do so with one or more `[[params.social]]` keys. Each key will have the three fields at a minimum:
 
@@ -140,7 +138,6 @@ theme = "m10c"
 [params]
   author = "Christopher Hart"
   description = "A blog about all things technical."
-  avatar = "/global/avatar.png"
 
   [[params.social]]
     icon = "github"

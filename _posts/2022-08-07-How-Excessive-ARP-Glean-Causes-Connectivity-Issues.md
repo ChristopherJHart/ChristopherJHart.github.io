@@ -244,12 +244,35 @@ Capturing on 'ps-inb'
 
 Here, we can see that N9K-1 (who owns IP 10.0.0.2) is generating a large amount of ARP Requests for a variety of IPv4 addresses in the 10.0.0.0/16 subnet. The sequence of events causing this outage is beginning to take shape!
 
-1. The security scanner is sending a large amount of traffic to a variety of IPv4 addresses in the 10.0.0.0/16 subnet.
-2. N9K-1 receives this traffic and punts it to the control plane, attempting to use ARP to resolve a MAC address for each IPv4 address.
-3. Since N9K-1 is inundated by ARP Glean traffic, it logically generates a large amount of ARP Requests.
-4. N9K-2's control plane is overwhelmed by these ARP Requests and has no choice but to start dropping them in hardware due to CoPP.
-5. When N9K-2 needs to refresh an entry in its ARP table, it sends an ARP Request out for the relevant IPv4 address. The ARP Reply in response is "starved out" by the large quantity of ARP Requests sent by N9K-1.
-6. Eventually, N9K-2's ARP entry expires, causing production traffic destined to the IPv4 address in that entry to be punted to the control plane as ARP Glean. This action (combined with N9K-2's inability to expeditiously resolve ARP for the production host's IPv4 address) introduces our connectivity issues, which could include throughput issues, application performance issues, and outright connectivity issues.
+First, the security scanner is sending a large amount of traffic to a variety of IPv4 addresses in the 10.0.0.0/16 subnet.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_1.jpg)
+
+N9K-1 receives this traffic and punts it to the control plane, attempting to use ARP to resolve a MAC address for each IPv4 address.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_2.jpg)
+
+Since N9K-1 is inundated by ARP Glean traffic, it logically generates a large amount of ARP Requests.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_3.jpg)
+
+N9K-2's control plane is overwhelmed by these ARP Requests and has no choice but to start dropping them in hardware due to CoPP.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_4.jpg)
+
+When N9K-2 needs to refresh an entry in its ARP table, it sends an ARP Request out for the relevant IPv4 address.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_5.jpg)
+
+The ARP Reply in response is "starved out" by the large quantity of ARP Requests sent by N9K-1.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_6.jpg)
+
+Eventually, N9K-2's ARP entry expires, causing production traffic destined to the IPv4 address in that entry to be punted to the control plane as ARP Glean.
+
+![]({{ site.baseurl }}/images/2022/arp-glean-connectivity-issues/glean_soe_7.jpg)
+
+This action (combined with N9K-2's inability to expeditiously resolve ARP for the production host's IPv4 address) introduces our connectivity issues, which could include throughput issues, application performance issues, and outright connectivity issues.
 
 Statistically, *eventually* the ARP Reply for the production host will be allowed by N9K-2's CoPP policy, allowing N9K-2 to resolve ARP for that host. This adds complexity to the problem. First, the *occurrence* of the problem seems extremely intermittent - sometimes an individual host or flow of traffic will stop working and then start working again. Second, the *impact* of the problem seems extremely intermittent - the individual host or flow affected by the issue will change from one instance of the issue to another.
 

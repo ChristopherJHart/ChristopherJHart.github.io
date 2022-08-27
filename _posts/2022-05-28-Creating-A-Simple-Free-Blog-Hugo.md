@@ -104,6 +104,8 @@ Receiving objects: 100% (397/397), 913.42 KiB | 9.32 MiB/s, done.
 Resolving deltas: 100% (146/146), done.
 ```
 
+> **Note**: The theme you choose may have additional instructions! Consult the documentation for the theme that you choose to see if any additional steps need to be taken to properly install your theme.
+
 ## Modify Hugo Configuration
 
 Now we need to modify the `config.toml` file within the root of our blog site to personalize the site further. You will most likely want to modify the following fields:
@@ -118,8 +120,6 @@ The `[params]` key typically defines parameters that the theme will use to rende
 
 * **author**: The name of the author of the blog site. This will typically be your name (either your real name or an online handle).
 * **description**: A brief description of the content of your blog. This will appear underneath the title of your blog (as defined by the `title` field) underneath your avatar.
-* **avatar**: A filepath (relative to the `static` directory of the blog site) to an image (JPEG, PNG, etc.) that will be displayed in the upper left corner of the blog site.
-* **images**: A list of filepaths (relative to the `static` directory of the blog site) for images (JPEG, PNG, etc.) that *can* be displayed on the blog site. The same filepath defined by the `avatar` field must be present in this list.
 
 In the m10c theme, if you want to add links to your social media, you can do so with one or more `[[params.social]]` keys. Each key will have the three fields at a minimum:
 
@@ -138,7 +138,6 @@ theme = "m10c"
 [params]
   author = "Christopher Hart"
   description = "A blog about all things technical."
-  avatar = "/global/avatar.png"
 
   [[params.social]]
     icon = "github"
@@ -227,7 +226,7 @@ Lastly, we need to set up a GitHub Actions workflow that will automatically buil
 christopher@ubuntu-playground:~/GitHub/blog-hugo$ mkdir -p .github/workflows
 ```
 
-Then, we will create a new file within this directory named `deploy_gh_pages.yaml` with the following contents.
+Then, we will create a new file within the `.github/workflows` directory named `deploy_gh_pages.yaml` with the following contents.
 
 ```
 ---

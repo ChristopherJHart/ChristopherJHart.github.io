@@ -28,9 +28,9 @@ Cisco Press publishes two separate books that make up the CCNA 200-301 Official 
 
 Readers tend to state that Wendell Odom's writing style is very detailed and technical, similar to a college-level textbook. If you have experience in the field and are familiar with technical documentation, you will most likely be at home with this book's writing style.
 
-* CCNA 200-301 Official Cert Guide Library ([Hardcover](https://amzn.to/3AqGSm9), [Kindle](https://amzn.to/3pQDHzb)) - Contains both Volume 1 and Volume 2 of the Official Cert Guide.
-* CCNA 200-301 Official Cert Guide Volume 1 ([Hardcover](https://amzn.to/3QWtxJh), [Paperback](https://amzn.to/3PUO4fV) | [Kindle](https://amzn.to/3e5aD4b) ) - The first volume of the Official Cert Guide. Covers networking fundamentals, Ethernet Local Area Networks (LANs), Spanning Tree Protocol, Virtual LANs (VLANs), IPv4 addressing, IPv4 routing, the Open Shortest Path First (OSPF) dynamic routing protocol, IPv6 addressing, and Wireless LANs (WLANs).
-* CCNA 200-301 Official Cert Guide Volume 2 ([Hardcover](https://amzn.to/3wBX0QJ), [Kindle](https://amzn.to/3QYnm7y)) - The second volume of the Official Cert Guide. Covers Internet Protocol (IP) access Access Control Lists (ACLs), security services, network architecture, and network automation fundamentals.
+* **CCNA 200-301 Official Cert Guide Library** ([Hardcover](https://amzn.to/3AqGSm9), [Kindle](https://amzn.to/3pQDHzb)) - Contains both Volume 1 and Volume 2 of the Official Cert Guide.
+* **CCNA 200-301 Official Cert Guide Volume 1** ([Hardcover](https://amzn.to/3QWtxJh), [Paperback](https://amzn.to/3PUO4fV) | [Kindle](https://amzn.to/3e5aD4b) ) - The first volume of the Official Cert Guide. Covers networking fundamentals, Ethernet Local Area Networks (LANs), Spanning Tree Protocol, Virtual LANs (VLANs), IPv4 addressing, IPv4 routing, the Open Shortest Path First (OSPF) dynamic routing protocol, IPv6 addressing, and Wireless LANs (WLANs).
+* **CCNA 200-301 Official Cert Guide Volume 2** ([Hardcover](https://amzn.to/3wBX0QJ), [Kindle](https://amzn.to/3QYnm7y)) - The second volume of the Official Cert Guide. Covers Internet Protocol (IP) access Access Control Lists (ACLs), security services, network architecture, and network automation fundamentals.
 
 ### Todd Lammle's Cisco CCNA Certification Guide
 
@@ -38,9 +38,9 @@ Todd Lammle is a network and security engineer with over 40 years of experience 
 
 Readers tend to state that Todd Lammle's writing style is engaging and accessible. If you do not have very much prior experience with technical documentation, you will most likely prefer this book's writing style. Learning networking concepts using this book will ease you into the computer networking world so that when other resources describe concepts, they will already be familiar to you.
 
-* Cisco CCNA Certification: Exam 200-301 Set ([Paperback](https://amzn.to/3QSLSa2)) - Contains both Volume 1 (Understanding Cisco Networking Technologies) and Volume 2 (Study Guide).
-* Understanding Cisco Networking Technologies, Volume 1: Exam 200-301 ([Paperback](https://amzn.to/3CDX71W), [Kindle](https://amzn.to/3e02Zbq)) - The first volume of Todd Lammle's Exam 200-301 Certification Guide Set. Covers networking fundamentals, network access technologies (Ethernet, Spanning Tree Protocol, etc.), IP connectivity and services, security fundamentals, and automation/programmability concepts.
-* CCNA Certification Study Guide, Volume 2: Exam 200-301 ([Paperback](https://amzn.to/3ToKXzF), [Kindle](https://amzn.to/3Atkx7w)) - The second volume of Todd Lammle's Exam 200-301 Certification Guide Set. Covers all of the exam topics for the CCNA certification exam in a single book. If you read Volume 1 first, then some material in Volume 2 will be review from Volume 1, some material will expand on topics from Volume 1, and some material will be completely new to you.
+* **Cisco CCNA Certification: Exam 200-301 Set** ([Paperback](https://amzn.to/3QSLSa2)) - Contains both Volume 1 (Understanding Cisco Networking Technologies) and Volume 2 (Study Guide).
+* **Understanding Cisco Networking Technologies, Volume 1: Exam 200-301** ([Paperback](https://amzn.to/3CDX71W), [Kindle](https://amzn.to/3e02Zbq)) - The first volume of Todd Lammle's Exam 200-301 Certification Guide Set. Covers networking fundamentals, network access technologies (Ethernet, Spanning Tree Protocol, etc.), IP connectivity and services, security fundamentals, and automation/programmability concepts.
+* **CCNA Certification Study Guide, Volume 2: Exam 200-301** ([Paperback](https://amzn.to/3ToKXzF), [Kindle](https://amzn.to/3Atkx7w)) - The second volume of Todd Lammle's Exam 200-301 Certification Guide Set. Covers all of the exam topics for the CCNA certification exam in a single book. If you read Volume 1 first, then some material in Volume 2 will be review from Volume 1, some material will expand on topics from Volume 1, and some material will be completely new to you.
 
 ## Video Courses
 

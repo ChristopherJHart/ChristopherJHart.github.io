@@ -54,7 +54,7 @@ Readers tend to state that Todd Lammle's writing style is engaging and accessibl
 
 ### Jeremy's IT Lab CCNA Video Course
 
-Jeremy McDowell of [Jeremy's IT Lab](https://www.youtube.com/c/JeremysITLab/featured) has a free YouTube playlist containing his complete course on the CCNA 200-301 certification exam topics. An ad-free experience as well as bonus material/content can be found in the [course's paid option here](https://jeremysitlab.teachable.com/p/ccna-200-301-full-course).
+Jeremy McDowell of [Jeremy's IT Lab](https://www.youtube.com/c/JeremysITLab/featured) has a [free YouTube playlist containing his complete course on the CCNA 200-301 certification exam topics](https://www.youtube.com/playlist?list=PLxbwE86jKRgMpuZuLBivzlM8s2Dk5lXBQ). An ad-free experience as well as bonus material/content can be found in the [course's paid option here](https://jeremysitlab.teachable.com/p/ccna-200-301-full-course).
 
 ### CBT Nuggets
 

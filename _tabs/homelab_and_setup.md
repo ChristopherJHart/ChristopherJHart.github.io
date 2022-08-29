@@ -7,6 +7,8 @@ order: 2
 
 ## Homelab
 
+As a disclaimer, I am an Amazon Associate. As an Amazon Associate, I earn from qualifying purchases linked from this page.
+
 An up-to-date topology of my homelab is below.
 
 ![]({{ site.baseurl }}/images/homelab_topology.jpg)

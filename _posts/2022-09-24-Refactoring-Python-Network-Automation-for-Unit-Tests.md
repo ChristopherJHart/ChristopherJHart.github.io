@@ -36,7 +36,7 @@ As previously mentioned, because Python is such a powerful language that can do 
 2. Transforms the output into something usable.
 3. Returns some meaningful output to the user.
 
-This large function cannot be unit tested since it relies upon external dependencies. We can refactor this large function into multiple smaller functions, then use a fourth function (called a ["wrapper function"](https://en.wikipedia.org/wiki/Wrapper_function)) to execute each of these smaller functions in sequence.
+This large function cannot be unit tested since it relies upon external dependencies. We can refactor this large function into multiple smaller functions, then use a fourth function (called a ["wrapper function"](https://en.wikipedia.org/wiki/Wrapper_function)) to execute each of these smaller functions in sequence. Sometimes, the result of one small function is passed into the next function in sequence, which is a concept known as [function composition](https://en.wikipedia.org/wiki/Function_composition_(computer_science)).
 
 This refactoring is best demonstrated through a practical example.
 

@@ -17,7 +17,13 @@ Host 192.168.10.3
     HostkeyAlgorithms +ssh-rsa
 ```
 
-> **Note**: After making this change, you may receive a `no matching key exchange method found` error message when attempting to SSH into the Cisco IOS network device once more. If so, add the `KexAlgorithms +diffie-hellman-group1-sha1` line underneath the relevant `Host` entry for the IP address or FQDN corresponding with the Cisco IOS network device in the `~/.ssh/config` file. For more information, see the [Cisco IOS - "No matching key exchange found" During SSH]({{ site.baseurl }}/Cisco-IOS-SSH-Key-Exchange-Algorithms/) article.
+You can also resolve this without modifying your SSH configuration file by adding `-oHostkeyAlgorithms=+ssh-rsa` to your SSH command as shown below:
+
+```
+christopher@ubuntu-playground:~$ ssh 192.168.10.3 -oHostkeyAlgorithms=+ssh-rsa
+```
+
+> **Note**: After making this change, you may receive a `no matching key exchange method found` error message when attempting to SSH into the Cisco IOS network device once more. If so, add the `KexAlgorithms +diffie-hellman-group1-sha1` line underneath the relevant `Host` entry for the IP address or FQDN corresponding with the Cisco IOS network device in the `~/.ssh/config` file. Alternatively, add `-oKexAlgorithms=+diffie-hellman-group1-sha1` to your SSH command. For more information, see the [Cisco IOS - "No matching key exchange found" During SSH]({{ site.baseurl }}/Cisco-IOS-SSH-Key-Exchange-Algorithms/) article.
 
 After adding these lines to the `~/.ssh/config` file, attempt to SSH into the Cisco IOS network device once more. You should now be able to SSH into the network device successfully.
 
@@ -29,6 +35,15 @@ This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
 Warning: Permanently added '192.168.10.3' (RSA) to the list of known hosts.
 (christopher@192.168.10.3) Password: 
+
+C3560-CX#
+```
+
+If you add the extra parameters to your SSH command instead, you should also be able to SSH into the network device successfully.
+
+```
+christopher@ubuntu-playground:~$ ssh 192.168.10.3 -oHostkeyAlgorithms=+ssh-rsa
+(christopher@192.168.10.3) Password:
 
 C3560-CX#
 ```

@@ -238,6 +238,9 @@ on:
       - main # Set a branch to deploy
   pull_request:
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     runs-on: ubuntu-22.04

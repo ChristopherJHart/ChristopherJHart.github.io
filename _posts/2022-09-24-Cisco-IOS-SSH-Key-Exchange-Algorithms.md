@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Cisco IOS - "No matching key exchange found" During SSH
+title: Cisco IOS - \"No matching key exchange found\" During SSH
 ---
 
 A common issue seen when attempting to SSH into a network device running Cisco's IOS or IOS-XE operating system using an OpenSSH client is as follows:

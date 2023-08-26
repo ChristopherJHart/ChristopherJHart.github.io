@@ -329,3 +329,7 @@ Standby CONFIG_FILE variable =
 Standby BOOTLDR variable does not exist
 Standby Configuration register is 0x2102
 ```
+
+## References
+
+* ["Troubleshooting the Upgrade" section of the "Troubleshooting Initial Startup Problems" chapter in the Cisco ASR 1000 Series Router Hardware Installation Guide document](https://www.cisco.com/c/en/us/td/docs/routers/asr1000/install/guide/asr1routers/asr-1000-series-hig/asr-hig-tbl.html#con_1043889).

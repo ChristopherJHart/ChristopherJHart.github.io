@@ -3,15 +3,14 @@ layout: post
 title: Granular Enforcement of Python Unit Test Coverage through Code Inspection
 ---
 
-If you're maintaining a medium-sized software project, you've probably found yourself in a situation where you've added a new feature or model to your Python project and then realized that you forgot to write unit tests for it. You might have code coverage tools in place, but measuring code coverage of unit tests is an imperfect science that can sometimes give a false sense of security. We can supplement code coverage tools by enforcing unit test coverage through "tests for our tests".
+If you're maintaining a medium-sized software project, you've probably found yourself in a situation where you've added a new feature or model to your Python project and then realized that you forgot to write unit tests for it. You might have code coverage tools in place, but measuring code coverage of unit tests is an imperfect science that can sometimes give a false sense of security. We can supplement code coverage tools by enforcing unit test coverage through "tests for our tests". Python's "everything is an object" philosophy makes it easy for us to detect when new code is added and validate whether one or more unit tests exist for it.
 
 ## Project Structure
 
-Let's start by taking a look at our project structure. Fire up your terminal and run the tree command:
+Let's start by taking a look at our project structure. Fire up your terminal and run the `tree` command:
 
 ```
-(venv) christopher@ubuntu-playground:~/GitHub/enforcing-unit-tests$ tree ./ -P *.py -I "*.pyc|venv/|__pycach
-e__"
+(venv) christopher@ubuntu-playground:~/GitHub/enforcing-unit-tests$ tree ./ -P *.py -I "*.pyc|venv/|__pycache__"
 ./
 ├── project
 │   ├── __init__.py
@@ -75,21 +74,7 @@ def test_IPV4_SUBNETS() -> None:
 
 ## The Problem
 
-If we run these unit tests, we can see that they pass:
-
-```
-(venv) christopher@ubuntu-playground:~/GitHub/enforcing-unit-tests$ python -m pytest tests/test_models_static.py 
-=========================================== test session starts ============================================
-platform linux -- Python 3.10.12, pytest-7.4.1, pluggy-1.3.0
-rootdir: /home/christopher/GitHub/enforcing-unit-tests
-collected 2 items                                                                                          
-
-tests/test_models_static.py ..                                                                       [100%]
-
-============================================ 2 passed in 0.01s =============================================
-```
-
-And if we run these unit tests with code coverage reporting enabled, we can see that they have 100% coverage:
+If we run these unit tests with code coverage reporting enabled, we can see that they pass with 100% test coverage:
 
 ```
 (venv) christopher@ubuntu-playground:~/GitHub/enforcing-unit-tests$ python -m pytest --cov=project tests/test_models_static.py 
@@ -165,7 +150,9 @@ TOTAL                     3      0   100%
 (venv) christopher@ubuntu-playground:~/GitHub/enforcing-unit-test
 ```
 
-If this project is a proper software development project where multiple developers are reviewing each other's code, it's possible that during the code review process, a fellow developer could catch that this change did not include unit tests for the new module. However, if this project is backed by a single developer, or if your reviewers are suffering from [code review fatigue](https://tylercipriani.com/blog/2022/03/12/code-review-procrastination-and-clarity/), it's possible for the lack of unit tests for the new model to be missed during the code review process. And since code coverage tools may not necessarily catch the missing code coverage, nobody would be the wiser.
+**This is the crux of the problem** - we have added new code, *forgot to add unit tests for it*, and our code coverage tool failed to catch the gap.
+
+If this project is a proper software development project where multiple developers are reviewing each other's code, it's possible that during the code review process, a fellow developer could catch that this change did not include unit tests for the new model. However, if this project is backed by a single developer, or reviewers are suffering from [code review fatigue](https://tylercipriani.com/blog/2022/03/12/code-review-procrastination-and-clarity/), it's possible for missing unit tests to slip through the cracks. And since coverage tools may not catch the coverage gap, nobody would be the wiser.
 
 ## Programmatically Enforcing Unit Test Coverage
 
@@ -233,6 +220,7 @@ Let's add our unit tests for the `IPV4_SUBNETS` and `NETWORK_VRFS` models:
 """Houses dynamic unit tests for the models.py file."""
 
 import inspect
+from typing import List
 
 import pytest
 
@@ -352,7 +340,7 @@ def test_IPV6_SUBNETS() -> None:
 
 Let's re-run our unit tests. This time, we see the `test_all_models_have_unit_tests()` unit test fails because of the `__builtins__` object imported from the `project.models` module, which most Python modules will have defined "under the hood". For our purposes, we don't care about this object, so we need to refactor the `test_all_models_have_unit_tests()` function to do two things:
 
-1. Filter the imported objects through a [*predicate function*](https://docs.python.org/3/howto/functional.html#built-in-functions). The `projects.models` module may contain helper functions or classes that are unrelated to the modules we want to test. To work around this, we will define a predicate function called `is_builtin_data_structure_or_type()` that will return `True` if the object is a built-in data structure or type, and `False` otherwise. Then, we will pass this predicate function to the `inspect.getmembers()` function as the second argument.
+1. Filter the imported objects through a [*predicate function*](https://docs.python.org/3/howto/functional.html#built-in-functions). The `projects.models` module may contain helper functions or classes that are unrelated to the models we want to test. To work around this, we will define a predicate function called `is_builtin_data_structure_or_type()` that will return `True` if the object is a built-in data structure or type, and `False` otherwise. Then, we will pass this predicate function to the `inspect.getmembers()` function as the second argument.
 2. Within the `test_all_models_have_unit_tests()` function, we will check to see if objects returned by the `inspect.getmembers()` function are a "dunder" method or attribute starting with `__`. If they are, we will ignore them.
 
 First, the new `is_builtin_data_structure_or_type()` predicate function is shown below.

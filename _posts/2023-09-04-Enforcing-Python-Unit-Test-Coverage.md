@@ -5,6 +5,8 @@ title: Granular Enforcement of Python Unit Test Coverage through Code Inspection
 
 If you're maintaining a medium-sized software project, you've probably found yourself in a situation where you've added a new feature or model to your Python project and then realized that you forgot to write unit tests for it. You might have code coverage tools in place, but measuring code coverage of unit tests is an imperfect science that can sometimes give a false sense of security. We can supplement code coverage tools by enforcing unit test coverage through "tests for our tests". Python's "everything is an object" philosophy makes it easy for us to detect when new code is added and validate whether one or more unit tests exist for it.
 
+If you're interested, the source code for this proof of concept can be found in the [GitHub repository here](https://github.com/ChristopherJHart/enforcing-unit-tests).
+
 ## Project Structure
 
 Let's start by taking a look at our project structure. Fire up your terminal and run the `tree` command:

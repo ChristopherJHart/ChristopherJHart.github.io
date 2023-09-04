@@ -9,7 +9,7 @@ If you're interested, the source code for this proof of concept can be found in 
 
 ## Project Structure
 
-Let's start by taking a look at our project structure. Fire up your terminal and run the `tree` command:
+Let's start by taking a look at our project structure. Fire up the terminal and run the `tree` command:
 
 ```
 (venv) christopher@ubuntu-playground:~/GitHub/enforcing-unit-tests$ tree ./ -P *.py -I "*.pyc|venv/|__pycache__"

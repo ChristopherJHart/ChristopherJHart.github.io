@@ -69,11 +69,13 @@ If we extract the first item from the list `chunk`, we still get no help from ou
 
 ![]({{ site.baseurl }}/images/2023/typevars/first_item_chunk_cursor_hover.png)
 
-If we attempt to use the first item, our IDE is still of no help. To use this item properly, we have to mentally know that the first item is an `int` and that we can use it as such.
+If we attempt to use the first item, our IDE is still of no help. To use this item properly, we have to mentally know that the first item is an `int` and that we can use it as such. That's additional cognitive overhead for us in our already-encumbered mind. No thanks!
 
 ![]({{ site.baseurl }}/images/2023/typevars/first_item_chunk_dot.png)
 
-Let's refactor our function to use generic type hinting through `TypeVar` and see how that helps us. We define a new TypeVar named `T` and use it to type hint the `big_list` argument and the return value of the function.
+The problem here is that the `Any` type hint truly means *anything*. It's *possible* that the `chunk_list` function will take in a list of integers and return a list of integers, but it's also *possible* that it will take in a list of integers and return a list of strings. The `Any` type hinting doesn't give us any additional information about the types of objects that are passed into or returned from the function.
+
+Generic types seek to solve this issue by fleshing out the contract between the function's arguments and its return value. Let's refactor our function to use generic type hinting through `TypeVar` and see how that helps us. We define a new TypeVar named `T` and use it to type hint the `big_list` argument and the return value of the function.
 
 ```python
 import sys
@@ -104,6 +106,8 @@ if __name__ == "__main__":
 
 ```
 
+This type hinting signifies that the type containerized by the list of lists that is ultimately returned by the `chunk_list` function will be the *same* type contained within the `big_list` list passed into the function.
+
 If we re-run this program, it executes precisely the same:
 
 ```
@@ -113,7 +117,7 @@ christopher@ubuntu-playground:~/GitHub/typevar-example$ python3 main.py
 [4]
 ```
 
-The real power from our use of generics comes when we interact with the `chunk` variable. If we hover over it, we see that it's of type `List[int]`.
+The real power from our use of generics comes when we interact with the `chunk` variable. If we hover over it, we see that it's of type `List[int]` now, not a type of `List[Any]`.
 
 ![]({{ site.baseurl }}/images/2023/typevars/typed_chunk_cursor_hover.png)
 
@@ -121,11 +125,11 @@ If we extract the first item from the list and hover our cursor over it, our IDE
 
 ![]({{ site.baseurl }}/images/2023/typevars/first_item_typed_chunk_cursor_hover.png)
 
-Finally, if we attempt to use the first item, our IDE knows it's an `int` and offers us all the options we'd expect.
+Finally, if we attempt to use the first item, our IDE knows it's an `int` and offers us all the options we'd expect. Neat!
 
 ![]({{ site.baseurl }}/images/2023/typevars/first_item_typed_chunk_dot.png)
 
-This is the power of generic type hinting. It allows us to be more confident in our code and write it more quickly. It also allows us to be more confident in the code of others, as our IDE can help us more easily understand what types of objects are being passed around code that may be unfamiliar to us.
+This is the power of generic type hinting! It allows us to be more confident in our code and write it more quickly. It also allows us to reason about other people's code, as our IDE can help us more easily understand what types of objects are being passed around code that may be unfamiliar to us.
 
 [The Grug Brained Developer](https://grugbrain.dev/) put it best:
 

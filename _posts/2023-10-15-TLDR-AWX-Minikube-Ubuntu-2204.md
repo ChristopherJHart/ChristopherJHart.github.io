@@ -5,6 +5,8 @@ title: "TL;DR: Install AWX with Minikube on Ubuntu 22.04"
 
 This post serves as a quick reference for installing AWX through a local Minikube cluster on Ubuntu 22.04 using [AWX Operator](https://github.com/ansible/awx-operator). It is not a wholistic replacement for the [official AWX Operator documentation on this subject](https://github.com/ansible/awx-operator/blob/devel/docs/installation/basic-install.md), but serves as a quick summary of the steps.
 
+Note that this guide is *not* intended for a production environment. It is intended for a development environment where you'd like to quickly spin up an AWX instance for testing purposes.
+
 ## Prerequisites
 
 This post assumes that you already have Docker installed and a Minikube cluster running on your Ubuntu 22.04 system. If this is not the case, reference the following two posts:

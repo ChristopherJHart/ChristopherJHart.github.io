@@ -20,6 +20,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 minikube version
 minikube start --cpus=4 --memory=6g --addons=ingress
 alias kubectl="minikube kubectl --"
+kubectl version --short
 ```
 
 Minikube should now be installed on your Ubuntu 22.04 system, and a cluster with access to 4 CPUs and 6 gigabytes of memory should be running.

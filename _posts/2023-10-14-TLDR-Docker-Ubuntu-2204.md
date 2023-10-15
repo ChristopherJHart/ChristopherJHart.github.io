@@ -40,7 +40,7 @@ cat /etc/os-release
 
 Example output of this command is below:
 
-```
+```console
 christopher@ubuntu:~$ cat /etc/os-release
 PRETTY_NAME="Ubuntu 22.04.3 LTS"
 NAME="Ubuntu"
@@ -69,7 +69,7 @@ sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
 Example output of these commands is below:
 
-```
+```console
 christopher@awx:~$ sudo apt-get -y install ca-certificates curl gnupg
 [sudo] password for christopher:
 Reading package lists... Done
@@ -105,7 +105,7 @@ sudo apt-get -y update
 
 Example output of these commands is below:
 
-```
+```console
 christopher@awx:~$ echo \
   "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
   "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
@@ -133,7 +133,7 @@ sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plug
 
 Example output of this command is below:
 
-```
+```console
 christopher@awx:~$ sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 Reading package lists... Done
 Building dependency tree... Done
@@ -234,7 +234,7 @@ exec su -l $USER
 
 Example output of this command is below:
 
-```
+```console
 christopher@awx:~$ sudo usermod -aG docker $USER
 christopher@awx:~$
 christopher@awx:~$ exec su -l $USER
@@ -253,7 +253,7 @@ docker run hello-world
 
 Example output of these commands is below:
 
-```
+```console
 christopher@awx:~$ docker --version
 Docker version 24.0.6, build ed223bc
 

@@ -13,4 +13,4 @@ I graduated from East Carolina University in 2020 with a Bachelor’s of Science
 
 I am familiar with a number of programming languages, but am strongest in Python.
 
-Feel free to keep in touch using your preferred social media – I have linked to all of my frequently-used accounts to the right! Please keep in mind that all opinions expressed on this website and social media are my own, personal views; they are not reflective of, nor endorsed by, my employer.
+Feel free to keep in touch using your preferred social media – I have linked to all of my frequently-used accounts in the bottom left! Please keep in mind that all opinions expressed on this website and social media are my own, personal views; they are not reflective of, nor endorsed by, my employer.

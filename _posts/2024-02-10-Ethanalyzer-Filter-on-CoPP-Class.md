@@ -141,9 +141,9 @@ The above output indicates that our CoPP class of interest, `copp-system-p-class
 Lastly, execute the `ethanalyzer local interface inband decode-internal display-filter "cisco.blob.sup_qnum==<xyz>" limit-captured-frames 0` command, replacing `<xyz>` with the queue number identified in the previous step (in our example, it's 28).
 
 <blockquote>
-<b>Note</b>: If you get an error message similar to either <code class="language-plaintext highlighter-rouge">tshark: Neither "cisco.blob.sup_qnum" nor "35" are field or protocol names.</code> or <code class="language-plaintext highlighter-rouge">ethanalyzer: Neither "cisco.blob.sup_qnum" nor "28" are field or protocol names</code>, you may be running into one of the following issues:
+<b>Note</b>: If you get an error message similar to either <code>tshark: Neither "cisco.blob.sup_qnum" nor "35" are field or protocol names.</code> or <code>ethanalyzer: Neither "cisco.blob.sup_qnum" nor "28" are field or protocol names</code>, you may be running into one of the following issues:
 <ul>
-<li>You most likely forgot to include the <code class="language-plaintext highlighter-rouge">decode-internal</code> keyword in the command.</li>
+<li>You most likely forgot to include the <code>decode-internal</code> keyword in the command.</li>
 <li>You may be running an older NX-OS software release - you'll need to upgrade the NX-OS software of your switch to NX-OS 10.1(1) or later to filter on traffic from a specific CoPP class in Ethanalyzer.</li>
 <li>You may be running a Nexus switch or line card that does not support this feature, such as a first-generation Nexus 9000 line card or switch (which use the Broadcom Trident 2 ASIC, model numbers typically end in TX or PX) or a Nexus 9800 series switch (which use the Cisco Silicon One ASIC). This feature is only supported on Nexus 9000 series switches with the Cisco Cloud Scale ASIC, which typically includes model numbers that end in -EX, -FX, -FX2, -FX3, -GX, -GX2, and so on.</li>
 </ul>

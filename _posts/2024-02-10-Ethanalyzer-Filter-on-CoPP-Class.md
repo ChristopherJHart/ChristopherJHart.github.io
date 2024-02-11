@@ -17,6 +17,8 @@ Troubleshooting drops in a CoPP policy can be a bit challenging in some producti
 
 Starting with NX-OS software release 10.1(1), the [Ethanalyzer control plane packet capture utility](https://www.cisco.com/c/en/us/td/docs/dcn/nx-os/nexus9000/104x/troubleshooting/cisco-nexus-9000-series-nx-os-troubleshooting-guide-104x/m-troubleshooting-tools-and-methodology.html#reference_khl_lns_nyb) can filter on traffic that matches a specific CoPP class.
 
+> **Note**: The ability to filter Ethanalyzer on a specific CoPP class is only available on Cisco Nexus switches or line cards with the Cisco Cloud Scale ASIC. This typically includes model numbers that end in -EX, -FX, -FX2, -FX3, -GX, -GX2, and so on. This feature is not available on older first-generation Nexus 9000 line cards or switches (which use the Broadcom Trident 2 ASIC, model numbers typically end in TX or PX) or on Nexus 9800 series switches (which use the Cisco Silicon One ASIC).
+
 ## Procedure
 
 Let's walk through the steps to set up this filter.

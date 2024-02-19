@@ -56,6 +56,12 @@ The PHY layer on Switch-1's Ethernet1/1 interface will detect that it is no long
 
 ![]({{ site.baseurl }}/images/2024/ethernet-lf-rf/lfrf_lower_level_lf_generated.svg)
 
+The MAC layer will interpret this message and take appropriate action, such as informing the device's forwarding engine (and ultimately, the network operating system) that the link is effectively down.
+
+> **Note**: There is usually other logic, such as starting a debounce timer, that the MAC layer or forwarding engine will perform when a Local Fault is detected. This logic tends to be implementation-specific and is not standardized across all devices, so we won't cover it here.
+
+## Remote Fault
+
 At this point, Switch-1's Ethernet1/1 interface can no longer receive data on this link. However, it may still be able to transmit data across the link, as the PHY layer's transmitter may still be functional. It's *imperative* that Switch-1 find a way to inform Switch-2 that it is no longer receiving valid data from Switch-2 so that Switch-2 does not wrecklessly continue to send data across the link that will never be received.
 
 This is where the **Remote Fault** message comes into play. The RS for Switch-1's Ethernet1/1 interface will generate a Remote Fault message and send it across the link to Switch-2's Ethernet1/2 interface.
@@ -63,6 +69,8 @@ This is where the **Remote Fault** message comes into play. The RS for Switch-1'
 ![]({{ site.baseurl }}/images/2024/ethernet-lf-rf/lfrf_lower_level_rf_generated.svg)
 
 When Switch-2's Ethernet1/2 interface receives the Remote Fault message, it will know that Switch-1 is no longer receiving valid data from Switch-2, indicating that the link is unhealthy. At this point, Switch-2 will generally declare the link/interface as "down", allowing higher-level protocols to take appropriate action (such as routing protocols reconverging, etc.).
+
+> **Note**: Similarly to when a Local Fault is detected, there is usually other logic, such as starting a debounce timer, that the MAC layer or forwarding engine will perform when a Remote Fault is detected. This logic tends to be implementation-specific and is not standardized across all devices, so we won't cover it here.
 
 Something interesting to note is that Switch-2's Ethernet1/2 interface will not completely stop transmitting *all* data out of Ethernet1/2 after receiving a Remote Fault message. Instead, it will continuously generate IDLE symbols (which are essentially "no data" or "line not busy" messages) across the link. This way, if/when the issue with the unidirectional path from Switch-2's Ethernet1/2 interface to Switch-1's Ethernet1/1 interface is resolved, the link can quickly return to a healthy state.
 

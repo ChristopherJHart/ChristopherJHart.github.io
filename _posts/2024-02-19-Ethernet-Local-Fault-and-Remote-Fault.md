@@ -82,4 +82,15 @@ Thanks to the magic of oscilloscopes and the skill of those who wield them, an e
 
 ## Conclusion
 
-Ethernet's Local Fault and Remote Fault messages are simple yet informative tools for troubleshooting physical layer issues in Ethernet networks. They provide insight into the nature of the link's failure, allowing network operators to more quickly identify the root cause of the issue and resolve it.
+Ethernet's Local Fault and Remote Fault messages are simple yet informative tools for troubleshooting physical layer issues in Ethernet networks. They are typically exposed to network operators through the device's system logs or command line output. An example from Cisco's IOS-XR network operating system is below, where interface TenGigabitEthernet0/0/0/15 received a Remote Fault message from the remote device:
+
+```
+RP/0/RP0/CPU0:ios#show controllers TenGigE0/0/0/15
+    Operational data for interface TenGigE0/0/0/15:
+    State:
+        Administrative state: enabled
+        Operational state: Down (Reason: Remote Fault)
+        LED state: Yellow On
+```
+
+These messages provide insight into the nature of the link's failure, allowing network operators to more quickly identify the root cause of the issue and resolve it.

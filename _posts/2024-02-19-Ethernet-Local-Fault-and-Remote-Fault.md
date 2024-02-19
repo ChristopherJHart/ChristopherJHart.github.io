@@ -62,7 +62,7 @@ The MAC layer will interpret this message and take appropriate action, such as i
 
 ## Remote Fault
 
-At this point, Switch-1's Ethernet1/1 interface can no longer receive data on this link. However, it may still be able to transmit data across the link, as the PHY layer's transmitter may still be functional. It's *imperative* that Switch-1 find a way to inform Switch-2 that it is no longer receiving valid data from Switch-2 so that Switch-2 does not wrecklessly continue to send data across the link that will never be received.
+At this point, Switch-1's Ethernet1/1 interface can no longer receive data on this link. However, it may still be able to transmit data across the link, as the PHY layer's transmitter may still be functional. It's *imperative* that Switch-1 find a way to inform Switch-2 that it is no longer receiving valid data from Switch-2 so that Switch-2 does not recklessly continue to send data across the link that will never be received.
 
 This is where the **Remote Fault** message comes into play. The RS for Switch-1's Ethernet1/1 interface will generate a Remote Fault message and send it across the link to Switch-2's Ethernet1/2 interface.
 

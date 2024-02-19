@@ -29,18 +29,18 @@ panel:
 
 #  The liquid date format › http://strftime.net/
 date_format:
-  tooltip: '%a, %b %e, %Y, %l:%M %p %z'
+  tooltip: "%a, %b %e, %Y, %l:%M %p %z"
   post:
-    long: '%b %e, %Y'
-    short: '%b %e'
-    archive_month: '%b'
+    long: "%b %e, %Y"
+    short: "%b %e"
+    archive_month: "%b"
 
 copyright:
   # Shown at the bottom of the post
   license:
     template: This post is licensed under :LICENSE_NAME by the author.
-    name: CC BY 4.0
-    link: https://creativecommons.org/licenses/by/4.0/
+    name: CC BY-NC-SA
+    link: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
   # Displayed in the footer
   brief: Some rights reserved.
@@ -59,7 +59,7 @@ not_found:
 # ----- Posts related labels -----
 
 post:
-  published: 'on'
+  published: "on"
   updated: Updated
   timeago:
     day: days ago

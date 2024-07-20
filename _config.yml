@@ -54,8 +54,13 @@ google_site_verification: google_meta_tag_verification # change to your verifica
 
 # ↑ --------------------------
 
+plugins:
+  - jekyll-paginate
+
 # Enter your Google Analytics web tracking code (e.g. UA-2110908-2) to activate tracking
-google_analytics: G-8KHN5J9VMP
+analytics:
+  google:
+    id: G-8KHN5J9VMP
 
 # Prefer color scheme setting.
 #

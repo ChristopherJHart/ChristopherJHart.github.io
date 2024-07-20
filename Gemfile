@@ -2,7 +2,15 @@
 
 source "https://rubygems.org"
 
-gem "jekyll-theme-chirpy", "~> 4.3", ">= 4.3.4"
+gem "jekyll-include-cache"
+gem "jekyll-paginate"
+gem "jekyll-redirect-from"
+gem "jekyll-seo-tag"
+gem "jekyll-archives"
+gem "jekyll-sitemap"
+
+# Theme
+gem "jekyll-theme-chirpy"
 
 group :test do
   gem "html-proofer", "~> 3.18"

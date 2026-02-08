@@ -4,6 +4,7 @@
 !.editorconfig
 !.nojekyll
 !.travis.yml
+!.ruby-version
 
 # bundler cache
 _site/*
